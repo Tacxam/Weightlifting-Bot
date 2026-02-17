@@ -8,3 +8,5 @@ Users can input scores into a leaderboard:
 - Differentiated by gender
 - Differentiated by exercise (Major lifts)
 - When a user adds a new score, previous scores of the same lift are deleted.
+? Might need to archive old scores if a user is only allowed one score and most recent gets deleted.
+    might want to retrieve old score and readd it.
