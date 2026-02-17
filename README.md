@@ -1,6 +1,10 @@
 # Weightlifting-Bot
 Bot for the RMIT Lifting Association
 
+# Commands:
+Undo: retrieves an old score if it exists, deletes the most recent score. 
+Del: Deletes score and score history.
+
 # Plans:
 Leaderboard:
 Users can input scores into a leaderboard:

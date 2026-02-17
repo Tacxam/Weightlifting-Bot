@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 
 // Delete score from leaderboard
 module.exports = {
-	data: newSlashCommandBuilder()
+	data: new SlashCommandBuilder()
 		.setName('adminundoscore')
 		.setDescription('Delete a score from the leaderboard. (Admin Only)')
 		.addStringOption((option) => option.setName('user').setDescription('The user whose score is being deleted').setRequired(true))
