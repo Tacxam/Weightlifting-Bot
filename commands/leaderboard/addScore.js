@@ -13,7 +13,7 @@ module.exports = {
 		const exercise = interaction.options.getString('exercise');
 
 		await interaction.reply({
-			content: `You have submitted ${weight}kg for ${exercise}.`,
+			content: `You have submitted ${weight}kg for ${exercise}. Is this correct?`,
 		});
 	},
 };
