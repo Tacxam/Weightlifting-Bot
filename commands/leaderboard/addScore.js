@@ -8,6 +8,11 @@ module.exports = {
 		.addStringOption((option) => option.setName('weight').setDescription('The weight being submitted.').setRequired(true))
 		.addStringOption((option) => option.setName('exercise').setDescription('The exercise being submitted.').setRequired(true)),
 	async execute(interaction) {
-		// Placeholder
+		const weight = interaction.options.getString('weight');
+		const exercise = interaction.options.getString('exercise');
+
+		await interaction.reply({
+			content: `You have submitted ${weight}kg for ${exercise}`,
+		});
 	},
 };
