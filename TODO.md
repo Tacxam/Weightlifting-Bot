@@ -1,0 +1,2 @@
+- addChoices for reload command for every command
+- addScore needs to store to a DB??
