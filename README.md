@@ -1,6 +1,12 @@
 # Weightlifting-Bot
 Bot for the RMIT Lifting Association
 
+When creating new commands:
+node deploy-commands.js
+
+When running bot:
+node index.js
+
 # Commands:
 Undo: retrieves an old score if it exists, deletes the most recent score. 
 Del: Deletes score and score history.
