@@ -1,5 +1,6 @@
 const pending = new Map();
 
+// interaction.user.id, { weight, exercise }
 function setPending(userId, data) {
 	pending.set(userId, { ...data, createdAt: Date.now() });
 }
