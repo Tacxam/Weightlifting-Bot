@@ -27,7 +27,7 @@ module.exports = {
 		);
 
 		// Request confirmation of submission
-		await interaction.reply({
+		const msg = await interaction.reply({
 			content: `You want to submit ${weight}kg for ${exercise}.\nIs this correct?`,
 			components: [row],
 			flags: MessageFlags.Ephemeral,

@@ -27,7 +27,7 @@ module.exports = {
 
 		// Handle Buttons # TODO make this only for addscore
 		else if (interaction.isButton()) {
-			console.log(interaction);
+			console.log(interaction.commandName);
 			const handler = handlers.get('buttonHandler');
 			await handler(interaction);
 		};
