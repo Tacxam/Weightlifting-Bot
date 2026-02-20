@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const exerciseChoices = require('../../utils/exerciseChoices.js');
 const { setPending } = require('../../utils/pendingSubmission.js');
 
@@ -27,7 +27,7 @@ module.exports = {
 
 		// Request confirmation of submission
 		await interaction.reply({
-			content: `You have submitted ${weight}kg for ${exercise}.\nIs this correct?`,
+			content: `You want to submit ${weight}kg for ${exercise}.\nIs this correct?`,
 			component: [row],
 			ephemeral: true,
 		});
