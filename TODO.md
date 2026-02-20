@@ -19,4 +19,4 @@
 [ ] reload command autofill, make make it so it auto reads all the files in the commands directory
 
 ## Scalability
-[ ] Isolate handlers by function, as of now, buttonHandler only handles addScore, but need to be able to handle multiple commands across several handlers
+[X] Isolate handlers by function, ! Use collectors now
