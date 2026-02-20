@@ -8,7 +8,7 @@
 [ ] addScore needs to store to a DB??
 [ ] delScore needs to delete from a DB??
 [ ] Create score confirmation functionality with pendingSubmission.js
-[ ] addScore implement confirmation
+[X] addScore implement confirmation
 [ ] delScore implement confirmation
 [ ] undoScore implement confirmation
 [ ] adminDelScore implement confirmation
@@ -17,3 +17,6 @@
 ## Utility
 [ ] Implement a function for users to understand what bot's purpose is
 [ ] reload command autofill, make make it so it auto reads all the files in the commands directory
+
+## Scalability
+[ ] Isolate handlers by function, as of now, buttonHandler only handles addScore, but need to be able to handle multiple commands across several handlers
