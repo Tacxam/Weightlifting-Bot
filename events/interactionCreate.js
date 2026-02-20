@@ -1,84 +1,32 @@
-const { Events, MessageFlags, Collection } = require('discord.js');
-const { getPending, deletePending } = require('pendingSubmission.js');
+const { Events, Collection } = require('discord.js');
+const fs = require('node:fs');
+const path = require('node:path');
+
+const handlers = new Collection();
+
+// Require handlers
+const handlersPath = path.join(__dirname, 'handlers');
+const handlerFiles = fs.readdirSync(handlersPath).filter((file) => file.endsWith('.js'));
+// For each file get their filePaths and put the handler file objects into a temporary variable 'handler' before putting them into the handlers Collection
+for (const file of handlerFiles) {
+	const filePath = path.join(handlersPath, file);
+	const handler = require(filePath);
+
+	handlers.set(file.replace('.js', ''), handler);
+}
 
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
 		// Handle Slash Commands
 		if (interaction.isChatInputCommand()) {
-			const command = interaction.client.commands.get(interaction.commandName);
-			if (!command) {
-				console.error(`No command matching ${interaction.commandName} was found.`);
-				return;
-			}
-			// Check Cooldown
-			const { cooldowns } = interaction.client;
-			// If command is not in the cooldown Collection, add it
-			if (!cooldowns.has(command.data.name)) {
-				cooldowns.set(command.data.name, new Collection());
-			}
-			const now = Date.now();
-			const timestamps = cooldowns.get(command.data.name);
-			const defaultCooldownDuration = 3;
-			const cooldownAmount = (command.cooldown ?? defaultCooldownDuration) * 1_000;
-
-			if (timestamps.has(interaction.user.id)) {
-				const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
-				if (now < expirationTime) {
-					const expiredTimestamp = Math.round(expirationTime / 1_000);
-					return interaction.reply({
-						content: `You're on cooldown for \`${command.data.name}\`, buddy. Try again in <t:${expiredTimestamp}:R>.`,
-						flags: MessageFlags.Ephemeral,
-					});
-				}
-			}
-			timestamps.set(interaction.user.id, now);
-			setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
-			// Execute command
-			try {
-				await command.execute(interaction);
-			}
-			catch (error) {
-				console.error(error);
-				if (interaction.replied || interaction.deferred) {
-					await interaction.followUp({
-						content: 'There was an error while executing this command!',
-						flags: MessageFlags.Ephemeral,
-					});
-				}
-				else {
-					await interaction.reply({
-						content: 'There was an error while executing this command!',
-						flags: MessageFlags.Ephemeral,
-					});
-				}
-			}
+			await chatCommandHandler(interaction);
 			return;
 		}
 
 		// Handle Buttons
-		if (interaction.isButton()) {
-			// Confirm Button
-			if (interaction.customId === 'confirm') {
-				const pending = getPending(interaction.user.id);
-
-				// If there is no pending (expired?)
-				if (!pending) {
-					await interaction.reply('No pending submission found, your submission may have expired. Please try running the command again.');
-				}
-
-				// ... functionality
-
-				deletePending(interaction.user.id);
-				await interaction.update(`**${interaction.user.id}** submitted **${pending.weight}** for **${pending.exercise}**`);
-			}
-
-			// Cancel Button
-			if (interaction.customID === 'cancel') {
-				deletePending(interaction.user.id);
-
-				await interaction.reply(' Submission cancelled, nothing was submitted. ');
-			}
-		}
+		else if (interaction.isButton()) {
+			await buttonHandler(interaction);
+		};
 	},
 };
