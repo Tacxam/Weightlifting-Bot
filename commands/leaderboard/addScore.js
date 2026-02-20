@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const exerciseChoices = require('../../utils/exerciseChoices.js');
-const setPending = require('../../utils/pendingSubmission.js');
+const { setPending } = require('../../utils/pendingSubmission.js');
 
 // Add score to leaderboard (Delete any previous score from the leaderboard)
 module.exports = {
