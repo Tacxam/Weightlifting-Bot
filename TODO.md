@@ -16,3 +16,4 @@
 
 ## Utility
 [ ] Implement a function for users to understand what bot's purpose is
+[ ] reload command autofill, make make it so it auto reads all the files in the commands directory

@@ -66,17 +66,18 @@ module.exports = {
 				if (!pending) {
 					await interaction.reply('No pending submission found, your submission may have expired. Please try running the command again.');
 				}
+
+				// ... functionality
+
+				deletePending(interaction.user.id);
+				await interaction.update(`**${interaction.user.id}** submitted **${pending.weight}** for **${pending.exercise}**`);
 			}
-
-			// ... functionality
-
-			deletePending(interaction.user.id);
 
 			// Cancel Button
 			if (interaction.customID === 'cancel') {
 				deletePending(interaction.user.id);
 
-				await interaction.reply(' Your submission has been cancelled. ');
+				await interaction.reply(' Submission cancelled, nothing was submitted. ');
 			}
 		}
 	},
