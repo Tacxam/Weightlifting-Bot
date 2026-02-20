@@ -1,4 +1,4 @@
-const { getPending, deletePending } = require('pendingSubmission.js');
+const { getPending, deletePending } = require('../../utils/pendingSubmission.js');
 
 module.exports = async function buttonHandler(interaction) {
 	// Confirm Button

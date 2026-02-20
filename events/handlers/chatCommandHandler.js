@@ -1,3 +1,6 @@
+const { Collection, MessageFlags } = require('discord.js');
+const { setPending } = require('../../utils/pendingSubmission.js');
+
 module.exports = async function chatCommandHandler(interaction) {
 	// Handle Slash Commands
 	const command = interaction.client.commands.get(interaction.commandName);

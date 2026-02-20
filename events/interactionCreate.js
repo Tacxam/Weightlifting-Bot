@@ -20,13 +20,15 @@ module.exports = {
 	async execute(interaction) {
 		// Handle Slash Commands
 		if (interaction.isChatInputCommand()) {
-			await chatCommandHandler(interaction);
+			const handler = handlers.get('chatCommandHandler');
+			await handler(interaction);
 			return;
 		}
 
 		// Handle Buttons
 		else if (interaction.isButton()) {
-			await buttonHandler(interaction);
+			const handler = handlers.get('buttonHandler');
+			await handler(interaction);
 		};
 	},
 };
