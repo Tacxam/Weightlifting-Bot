@@ -2,6 +2,11 @@ const { getPending, deletePending } = require('../../utils/pendingSubmission.js'
 const { MessageFlags } = require('discord.js');
 
 module.exports = async function buttonHandler(interaction) {
+	// Remove buttons
+	await interaction.update({
+		components: [],
+	});
+
 	const pending = getPending(interaction.user.id);
 	confirmed = false;
 	// Confirm Button
@@ -25,11 +30,6 @@ module.exports = async function buttonHandler(interaction) {
 	if (interaction.customId === 'cancel') {
 		deletePending(interaction.user.id);
 	}
-
-	// Remove buttons
-	await interaction.update({
-		components: [],
-	});
 
 	// Handle text outputs
 	if (confirmed) {

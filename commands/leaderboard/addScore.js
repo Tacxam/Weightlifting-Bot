@@ -4,6 +4,7 @@ const { setPending } = require('../../utils/pendingSubmission.js');
 
 // Add score to leaderboard (Delete any previous score from the leaderboard)
 module.exports = {
+	name: 'addscore',
 	data: new SlashCommandBuilder()
 		.setName('addscore')
 		.setDescription('Add a score to the leaderboard.')
