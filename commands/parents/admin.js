@@ -20,7 +20,7 @@ for (const file of subcommandFiles) {
 // Create the builder data
 const builder = new SlashCommandBuilder()
   .setName("admin")
-  .setDescription("Admin parent");
+  .setDescription("...");
 
 for (const subcommand of subcommands.values()) {
   builder.addSubcommand(subcommand.data);
@@ -34,8 +34,6 @@ module.exports = {
     const sub = interaction.options.getSubcommand();
     const subHandler = subcommands.get(sub);
 
-    if (!subHandler) return;
-
-    return subHandler.execute(interaction);
+    return subHandler?.execute(interaction);
   },
 };

@@ -1,5 +1,5 @@
 const {
-  SlashCommandBuilder,
+  SlashCommandSubcommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
@@ -60,7 +60,7 @@ async function buttonHandler(interaction) {
 // Add score to leaderboard (Delete any previous score from the leaderboard)
 module.exports = {
   name: "addscore",
-  data: new SlashCommandBuilder()
+  data: new SlashCommandSubcommandBuilder()
     .setName("addscore")
     .setDescription("Add a score to the leaderboard.")
     .addIntegerOption((option) =>
@@ -79,7 +79,7 @@ module.exports = {
 
   async execute(interaction) {
     // Store values from options
-    const weight = interaction.options.getInt("weight");
+    const weight = interaction.options.getInteger("weight");
     const exercise = interaction.options.getString("exercise");
 
     // Add entry to the pending object

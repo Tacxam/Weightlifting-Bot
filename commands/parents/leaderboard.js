@@ -1,5 +1,38 @@
-const { SlashCommandBuilder } = require("discord.js");
-// const add = require("../sc/leaderboard/_add.js");
-// const remove = require("../sc/leaderboard/_add.js");
-// const undo = require("../sc/leaderboard/_undo.js");
-// const view = require("../sc/leaderboard/_view.js");
+const { SlashCommandBuilder, Collection } = require("discord.js");
+const fs = require("node:fs");
+const path = require("node:path");
+
+const subcommands = new Collection();
+
+// Require subcommands
+const subcommandPath = path.join(__dirname, "../sc/leaderboard");
+const subcommandFiles = fs
+  .readdirSync(subcommandPath)
+  .filter((file) => file.endsWith(".js"));
+for (const file of subcommandFiles) {
+  const filePath = path.join(subcommandPath, file);
+  const subcommand = require(filePath);
+  subcommand.filePath = filePath;
+
+  subcommands.set(subcommand.data.name, subcommand);
+
+	const builder = new SlashCommandBuilder()
+		.setName("l")
+		.setDescription("...")
+		
+		for (const subcommand of subcommands.values()) {
+			builder.addSubcommand(subcommand.data);
+		}
+
+		module.exports = {
+			name: "leaderboard",
+			data: builder,
+
+			async execute(interaction) {
+				const sub = interaction.options.getSubcommand();
+				const subHandler = subcommands.get(sub);
+
+				return subHandler?.execute(interaction);
+			}
+		}
+}

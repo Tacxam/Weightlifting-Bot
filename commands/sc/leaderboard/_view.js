@@ -1,10 +1,10 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandSubcommandBuilder } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
 
 // Displays Leaderboard
 module.exports = {
   name: "viewleaderboard",
-  data: new SlashCommandBuilder()
+  data: new SlashCommandSubcommandBuilder()
     .setName("viewleaderboard")
     .setDescription("Display leaderboard of submitted scores")
     .addStringOption((option) =>

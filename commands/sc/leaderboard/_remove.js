@@ -1,9 +1,9 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandSubcommandBuilder } = require("discord.js");
 
 // Delete score from leaderboard
 module.exports = {
   name: "delscore",
-  data: new SlashCommandBuilder()
+  data: new SlashCommandSubcommandBuilder()
     .setName("delscore")
     .setDescription("Delete a score from the leaderboard.")
     .addStringOption((option) =>
