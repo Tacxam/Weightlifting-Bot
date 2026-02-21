@@ -20,3 +20,4 @@
 
 ## Scalability
 [X] Isolate handlers by function, ! Use collectors now
+[ ] Configure subcommands

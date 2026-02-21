@@ -4,7 +4,7 @@ const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
   name: "admin_delscore",
   data: new SlashCommandBuilder()
-    .setName("admin_delscore")
+    .setName("delscore")
     .setDescription("Delete a score from the leaderboard. (Admin Only)")
     .addStringOption((option) =>
       option

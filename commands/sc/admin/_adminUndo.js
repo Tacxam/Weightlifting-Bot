@@ -4,7 +4,7 @@ const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
   name: "admin_undoscore",
   data: new SlashCommandBuilder()
-    .setName("admin_undoscore")
+    .setName("undoscore")
     .setDescription(
       "Undo a score from the leaderboard. An older score will replace it (Admin Only)",
     )
