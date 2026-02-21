@@ -1,11 +1,11 @@
 const { SlashCommandBuilder } = require("discord.js");
-const exerciseChoices = require("../../utils/exerciseChoices.js");
+const exerciseChoices = require("../../../utils/exerciseChoices.js");
 
 // Displays Leaderboard
 module.exports = {
-  name: "leaderboard",
+  name: "viewleaderboard",
   data: new SlashCommandBuilder()
-    .setName("leaderboard")
+    .setName("viewleaderboard")
     .setDescription("Display leaderboard of submitted scores")
     .addStringOption((option) =>
       option

@@ -6,12 +6,12 @@ const {
   MessageFlags,
   ComponentType,
 } = require("discord.js");
-const exerciseChoices = require("../../utils/exerciseChoices.js");
+const exerciseChoices = require("../../../utils/exerciseChoices.js");
 const {
   setPending,
   getPending,
   deletePending,
-} = require("../../utils/pendingSubmission.js");
+} = require("../../../utils/pendingSubmission.js");
 
 async function buttonHandler(interaction) {
   // Remove buttons
