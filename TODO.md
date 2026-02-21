@@ -9,6 +9,7 @@
 [ ] delScore needs to delete from a DB??
 [ ] Create score confirmation functionality with pendingSubmission.js
 [X] addScore implement confirmation
+[ ] **fix** addScore "Submission expired message" even after successful submission
 [ ] delScore implement confirmation
 [ ] undoScore implement confirmation
 [ ] adminDelScore implement confirmation

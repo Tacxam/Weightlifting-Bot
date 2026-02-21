@@ -20,7 +20,7 @@ async function buttonHandler(interaction) {
   });
 
   const pending = getPending(interaction.user.id);
-  confirmed = false;
+  let confirmed = false;
   // Confirm Button
   if (interaction.customId === "confirm") {
     // If there is no pending (expired?)
@@ -113,14 +113,19 @@ module.exports = {
     });
 
     // Button selected
-    collector?.on("collect", buttonHandler);
+    collector?.on("collect", async (i) => {
+      await buttonHandler(i);
+      collector.stop("handled");
+    });
 
     // Button expiry
-    collector?.on("end", (i) => {
-      interaction.editReply({
-        content: "Submission expired, Please try running the command again.",
-        components: [],
-      });
+    collector?.on("end", async (collected, reason) => {
+      if (reason === "time" && collected.size === 0) {
+        await interaction.editReply({
+          content: "Submission expired, Please try running the command again.",
+          components: [],
+        });
+      }
     });
   },
 };
