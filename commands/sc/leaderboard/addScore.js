@@ -63,7 +63,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("addscore")
     .setDescription("Add a score to the leaderboard.")
-    .addStringOption((option) =>
+    .addIntegerOption((option) =>
       option
         .setName("weight")
         .setDescription("The weight being submitted.")
@@ -76,10 +76,10 @@ module.exports = {
         .setRequired(true)
         .addChoices(...exerciseChoices),
     ),
-    
+
   async execute(interaction) {
     // Store values from options
-    const weight = interaction.options.getString("weight");
+    const weight = interaction.options.getInt("weight");
     const exercise = interaction.options.getString("exercise");
 
     // Add entry to the pending object
