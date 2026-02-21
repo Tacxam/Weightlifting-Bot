@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 
 // Delete score from leaderboard
 module.exports = {
+  name: 'delscore',
   data: new SlashCommandBuilder()
     .setName("delscore")
     .setDescription("Delete a score from the leaderboard.")
@@ -12,6 +13,8 @@ module.exports = {
         .setRequired(true),
     ),
   async execute(interaction) {
-    // Placeholder
+    const exercise = interaction.option.getString('exercise');
+
+    // ...Database interaction
   },
 };

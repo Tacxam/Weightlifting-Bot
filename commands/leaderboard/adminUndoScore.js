@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 
 // Delete score from leaderboard (Retrieve older score from leaderboard to replace removed score if exists)
 module.exports = {
+  name: "admin_undoscore",
   data: new SlashCommandBuilder()
     .setName("admin_undoscore")
     .setDescription(

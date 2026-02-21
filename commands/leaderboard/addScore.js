@@ -7,7 +7,11 @@ const {
   ComponentType,
 } = require("discord.js");
 const exerciseChoices = require("../../utils/exerciseChoices.js");
-const { setPending, getPending, deletePending } = require("../../utils/pendingSubmission.js");
+const {
+  setPending,
+  getPending,
+  deletePending,
+} = require("../../utils/pendingSubmission.js");
 
 async function buttonHandler(interaction) {
   // Remove buttons
@@ -51,8 +55,7 @@ async function buttonHandler(interaction) {
       flags: MessageFlags.Ephemeral,
     });
   }
-};
-
+}
 
 // Add score to leaderboard (Delete any previous score from the leaderboard)
 module.exports = {
@@ -73,6 +76,7 @@ module.exports = {
         .setRequired(true)
         .addChoices(...exerciseChoices),
     ),
+    
   async execute(interaction) {
     // Store values from options
     const weight = interaction.options.getString("weight");
@@ -101,6 +105,7 @@ module.exports = {
       withResponse: true,
     });
 
+    // Collector
     const collector = msg.resource?.message?.createMessageComponentCollector({
       filter: (i) => i.user.id == interaction.user.id,
       time: 30000,
@@ -108,14 +113,14 @@ module.exports = {
     });
 
     // Button selected
-    collector?.on('collect', buttonHandler)
+    collector?.on("collect", buttonHandler);
 
     // Button expiry
-    collector?.on('end', (i) => {
+    collector?.on("end", (i) => {
       interaction.editReply({
-        content: 'Submission expired, Please try running the command again.',
+        content: "Submission expired, Please try running the command again.",
         components: [],
-      })
-    })
+      });
+    });
   },
 };
