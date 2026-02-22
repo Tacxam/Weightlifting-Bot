@@ -61,7 +61,7 @@ async function buttonHandler(interaction) {
 module.exports = {
   name: "addscore",
   data: new SlashCommandSubcommandBuilder()
-    .setName("addscore")
+    .setName("add")
     .setDescription("Add a score to the leaderboard.")
     .addIntegerOption((option) =>
       option

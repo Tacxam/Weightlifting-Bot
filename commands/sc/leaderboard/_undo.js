@@ -4,7 +4,7 @@ const { SlashCommandSubcommandBuilder } = require("discord.js");
 module.exports = {
   name: "undoscore",
   data: new SlashCommandSubcommandBuilder()
-    .setName("undoscore")
+    .setName("undo")
     .setDescription(
       "Undo a score from the leaderboard. An older score will replace it",
     )

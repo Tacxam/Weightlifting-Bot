@@ -5,7 +5,7 @@ const exerciseChoices = require("../../../utils/exerciseChoices.js");
 module.exports = {
   name: "viewleaderboard",
   data: new SlashCommandSubcommandBuilder()
-    .setName("viewleaderboard")
+    .setName("view")
     .setDescription("Display leaderboard of submitted scores")
     .addStringOption((option) =>
       option
