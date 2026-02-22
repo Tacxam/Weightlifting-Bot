@@ -4,7 +4,7 @@ const path = require("node:path");
 
 const subcommands = new Collection();
 
-// Require subcommands
+// Pull subcommands
 const subcommandPath = path.join(__dirname, "../sc/leaderboard");
 const subcommandFiles = fs
   .readdirSync(subcommandPath)
@@ -16,6 +16,7 @@ for (const file of subcommandFiles) {
 
   subcommands.set(subcommand.data.name, subcommand);
 
+	// Create builder data
 	const builder = new SlashCommandBuilder()
 		.setName("l")
 		.setDescription("...")
@@ -24,6 +25,7 @@ for (const file of subcommandFiles) {
 			builder.addSubcommand(subcommand.data);
 		}
 
+		// Export
 		module.exports = {
 			name: "leaderboard",
 			data: builder,

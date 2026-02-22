@@ -4,7 +4,7 @@ const path = require("node:path");
 
 const subcommands = new Collection();
 
-// Require subcommands
+// Pull subcommands
 const subcommandPath = path.join(__dirname, "../sc/admin");
 const subcommandFiles = fs
   .readdirSync(subcommandPath)
