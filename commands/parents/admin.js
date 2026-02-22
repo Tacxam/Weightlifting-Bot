@@ -26,6 +26,7 @@ for (const subcommand of subcommands.values()) {
   builder.addSubcommand(subcommand.data);
 }
 
+// Export
 module.exports = {
   name: "admin",
   data: builder,
