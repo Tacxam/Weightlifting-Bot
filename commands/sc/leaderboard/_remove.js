@@ -15,6 +15,7 @@ module.exports = {
   async execute(interaction) {
     const exercise = interaction.option.getString("exercise");
 
+
     // ...Database interaction
   },
 };
