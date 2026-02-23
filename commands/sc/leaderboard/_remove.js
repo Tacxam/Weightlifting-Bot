@@ -73,7 +73,52 @@ module.exports = {
   async execute(interaction) {
     const exercise = interaction.option.getString("exercise");
 
+    setPending(interaction.user.id, exercise);
 
-    // ...Database interaction
+    const row = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId("confirm")
+        .setLabel("Confirm")
+        .setStyle(ButtonStyle.Success),
+      new ButtonBuilder()
+        .setCustomId("cancel")
+        .setLabel("Cancel")
+        .setStyle(ButtonStyle.Danger),
+    );
+
+    const msg = await interaction.reply({
+      content: `You want to remove your score for ${exercise}. Is this correct?`,
+      components: [row],
+      flags: MessageFlags.Ephemeral,
+      // Gives access to the interaction.reply object
+      withResponse: true,
+    });
+
+    /*
+    Collector Handling the Buttons
+    */
+
+    // Collector
+    const collector = msg.resource?.message?.createMessageComponentCollector({
+      filter: (i) => i.user.id == interaction.user.id,
+      time: 30000,
+      componentType: ComponentType.Button,
+    });
+
+    // Button selected
+    collector?.on("collect", async (i) => {
+      await buttonHandler(i);
+      collector.stop("handled");
+    });
+
+    // Button expiry
+    collector?.on("end", async (collected, reason) => {
+      if (reason === "time" && collected.size === 0) {
+        await interaction.editReply({
+          content: "Submission expired, Please try running the command again.",
+          components: [],
+        });
+      }
+    });
   },
 };

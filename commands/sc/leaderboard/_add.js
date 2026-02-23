@@ -103,8 +103,13 @@ module.exports = {
       content: `You want to submit ${weight}kg for ${exercise}.\nIs this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
+      // Gives access to the interaction.reply object
       withResponse: true,
     });
+
+    /*
+    Collector Handling the Buttons
+    */
 
     // Collector
     const collector = msg.resource?.message?.createMessageComponentCollector({
