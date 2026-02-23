@@ -35,7 +35,13 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
-    // ... functionality
+    /*
+     ... functionality
+     Check for score
+     if score exists
+     delete score, reply saying score deleted
+     else, reply saying no score found
+    */
 
     deletePending(interaction.user.id);
   }
@@ -48,7 +54,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} removed **${pending.weight}kg** for **${pending.exercise}**`,
+      content: `${interaction.user} removed their score for **${pending.exercise}**`,
     });
   } else {
     await interaction.followUp({
@@ -68,12 +74,13 @@ module.exports = {
       option
         .setName("exercise")
         .setDescription("The exercise score that is being deleted")
-        .setRequired(true),
+        .setRequired(true)
+        .addChoices(...exerciseChoices),
     ),
   async execute(interaction) {
-    const exercise = interaction.option.getString("exercise");
+    const exercise = interaction.options.getString("exercise");
 
-    setPending(interaction.user.id, exercise);
+    setPending(interaction.user.id, { exercise });
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()

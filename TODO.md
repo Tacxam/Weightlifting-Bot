@@ -10,7 +10,7 @@
 [ ] Create score confirmation functionality with pendingSubmission.js
 [X] addScore implement confirmation
 [X] **fix** addScore "Submission expired message" even after successful submission
-[ ] delScore implement confirmation
+[X] delScore implement confirmation
 [ ] undoScore implement confirmation
 [ ] adminDelScore implement confirmation
 [ ] adminUndoScore implement confirmation
@@ -22,7 +22,8 @@
 ## Utility
 [ ] Implement a function for users to understand what bot's purpose is
 [ ] reload command autofill, make make it so it auto reads all the files in the commands directory
+[ ] **fix** reload command for subcommands
 
 ## Scalability
 [X] Isolate handlers by function, ! Use collectors now
-[ ] Configure subcommands
+[X] Configure subcommands
