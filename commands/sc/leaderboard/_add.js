@@ -13,6 +13,7 @@ const {
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
 
+// Button handling
 async function buttonHandler(interaction) {
   // Remove buttons
   await interaction.update({
@@ -27,7 +28,7 @@ async function buttonHandler(interaction) {
     if (!pending) {
       return interaction.update({
         content:
-          "No pending submission found, your submission may have expired. Please try running the command again.",
+          "No pending submission found, the command may have expired. Please try running the command again.",
         components: [],
       });
     }
@@ -51,7 +52,7 @@ async function buttonHandler(interaction) {
     });
   } else {
     await interaction.followUp({
-      content: "Submission cancelled, nothing was submitted.",
+      content: "Command cancelled, nothing was submitted.",
       flags: MessageFlags.Ephemeral,
     });
   }
