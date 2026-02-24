@@ -73,7 +73,7 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise score that is being removed")
+        .setDescription("The exercise score that is being removed.")
         .setRequired(true)
         .addChoices(...exerciseChoices),
     ),
