@@ -54,7 +54,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} removed their score for **${pending.exercise}**`,
+      content: `${interaction.user} removed ${pending.user} score for **${pending.exercise}**`,
     });
   } else {
     await interaction.followUp({
@@ -70,7 +70,7 @@ module.exports = {
   data: new SlashCommandSubcommandBuilder()
     .setName("remove")
     .setDescription("Remove a score from the leaderboard. (Admin Only)")
-    .addStringOption((option) =>
+    .addUserOption((option) =>
       option
         .setName("user")
         .setDescription("The user whose score is being deleted")
@@ -83,9 +83,11 @@ module.exports = {
         .setRequired(true),
     ),
   async execute(interaction) {
-    const user = interaction.options.addStringOption("user");
-    const exercise = interaction.options.addStringOption("exercise");
+    const user = interaction.options.getUser("user");
+    const exercise = interaction.options.getString("exercise");
 
+    setPending(interaction.user.id, { user, exercise });
 
+    
   },
 };
