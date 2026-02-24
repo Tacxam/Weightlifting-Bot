@@ -8,7 +8,15 @@ When running bot:
 node index.js
 
 # Commands:
-Del: Deletes score and score history.
+**/s**
+add: adds score to user
+remove: removes score from user
+view: displays exercise leaderboard
+dots: calculates user's DOTS
+
+**/admin**
+add: add score to a user
+remove: removes score from a user
 
 # Plans:
 Leaderboard:
