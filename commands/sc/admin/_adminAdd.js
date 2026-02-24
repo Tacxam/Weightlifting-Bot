@@ -48,7 +48,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}**`,
+      content: `${interaction.user} set ${pending.user}'s **${pending.exercise}** as **${pending.weight}kg**`,
     });
   } else {
     await interaction.followUp({
@@ -63,24 +63,33 @@ module.exports = {
   name: "add",
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
-    .setDescription("Remove a score from the leaderboard. (Admin Only)")
+    .setDescription("Add a score to a user. (Admin Only)")
     .addUserOption((option) =>
       option
         .setName("user")
-        .setDescription("The user whose score is being deleted")
+        .setDescription("The user whose score is being added")
         .setRequired(true),
     )
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise score that is being deleted")
-        .setRequired(true),
-    ),
+        .setDescription("The exercise score that is being added")
+        .setRequired(true)
+				.addChoices(...exerciseChoices),
+    )
+		.addIntegerOption((option) =>
+			option
+				.setName("weight")
+				.setDescription("The exercise weight that is being added")
+				.setRequired(true)
+		),
+
   async execute(interaction) {
     const user = interaction.options.getUser("user");
     const exercise = interaction.options.getString("exercise");
+		const weight = interaction.options.getInteger("weight");
 
-    setPending(interaction.user.id, { user, exercise });
+    setPending(interaction.user.id, { user, exercise, weight});
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -95,7 +104,7 @@ module.exports = {
 
     // Request confirmation of submission
     const msg = await interaction.reply({
-      content: `You want to remove the ${exercise} score for ${user}.\nIs this correct?`,
+      content: `You want to submit ${weight}kg as ${user}'s ${exercise} score.\nIs this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object
