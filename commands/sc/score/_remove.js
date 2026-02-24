@@ -69,11 +69,11 @@ module.exports = {
   name: "removescore",
   data: new SlashCommandSubcommandBuilder()
     .setName("remove")
-    .setDescription("Remove a score from the leaderboard.")
+    .setDescription("Remove a score.")
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise score that is being deleted")
+        .setDescription("The exercise score that is being removed")
         .setRequired(true)
         .addChoices(...exerciseChoices),
     ),

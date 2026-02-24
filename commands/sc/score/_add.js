@@ -58,12 +58,12 @@ async function buttonHandler(interaction) {
   }
 }
 
-// Add score to leaderboard (Delete any previous score from the leaderboard)
+// Add score to leaderboard (Delete any previous score)
 module.exports = {
   name: "addscore",
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
-    .setDescription("Add a score to the leaderboard.")
+    .setDescription("Add a score.")
     .addIntegerOption((option) =>
       option
         .setName("weight")
