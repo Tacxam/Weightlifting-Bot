@@ -9,14 +9,14 @@ node index.js
 
 # Commands:
 **/s**
-add: adds score to user
-remove: removes score from user
-view: displays exercise leaderboard
-dots: calculates user's DOTS
+- add: adds score to user
+- remove: removes score from user
+- view: displays exercise leaderboard
+- dots: calculates user's DOTS
 
 **/admin**
-add: add score to a user
-remove: removes score from a user
+- add: add score to a user
+- remove: removes score from a user
 
 # Plans:
 Leaderboard:
