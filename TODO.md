@@ -11,9 +11,7 @@
 [X] addScore implement confirmation
 [X] **fix** addScore "Submission expired message" even after successful submission
 [X] delScore implement confirmation
-[ ] undoScore implement confirmation
 [ ] adminDelScore implement confirmation
-[ ] adminUndoScore implement confirmation
 
 # Powerlifting
 [ ] DOTS calculations
