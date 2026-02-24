@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, Collection } = require("discord.js");
+const { SlashCommandBuilder, Collection, PermissionFlagsBits } = require("discord.js");
 const fs = require("node:fs");
 const path = require("node:path");
 

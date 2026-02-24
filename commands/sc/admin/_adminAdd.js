@@ -28,20 +28,14 @@ async function buttonHandler(interaction) {
     if (!pending) {
       return interaction.update({
         content:
-          "No pending removal found, the command may have expired. Please try running the command again.",
+          "No pending submission found, the command may have expired. Please try running the command again.",
         components: [],
       });
     }
 
     confirmed = true;
 
-    /*
-     ... functionality
-     Check for score
-     if score exists
-     delete score, reply saying score deleted
-     else, reply saying no score found
-    */
+    // ... functionality
 
     deletePending(interaction.user.id);
   }
@@ -54,11 +48,11 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} removed ${pending.user}'s score for **${pending.exercise}**`,
+      content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}**`,
     });
   } else {
     await interaction.followUp({
-      content: "Command cancelled, nothing was removed.",
+      content: "Command cancelled, nothing was submitted.",
       flags: MessageFlags.Ephemeral,
     });
   }
@@ -66,9 +60,9 @@ async function buttonHandler(interaction) {
 
 // Delete score from leaderboard
 module.exports = {
-  name: "remove",
+  name: "add",
   data: new SlashCommandSubcommandBuilder()
-    .setName("remove")
+    .setName("add")
     .setDescription("Remove a score from the leaderboard. (Admin Only)")
     .addUserOption((option) =>
       option
@@ -80,8 +74,7 @@ module.exports = {
       option
         .setName("exercise")
         .setDescription("The exercise score that is being deleted")
-        .setRequired(true)
-        .addChoices(...exerciseChoices),
+        .setRequired(true),
     ),
   async execute(interaction) {
     const user = interaction.options.getUser("user");
