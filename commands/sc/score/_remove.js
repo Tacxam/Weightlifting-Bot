@@ -54,7 +54,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed && removals === 1) {
     await interaction.channel.send({
-      content: `${interaction.user} removed their score for **${pending.exercise}** (${score}kg)`,
+      content: `${interaction.user} removed their score for **${pending.exercise}** (**${score}kg**)`,
     });
   }
   else if (confirmed && removals === 0) {
