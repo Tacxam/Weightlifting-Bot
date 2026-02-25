@@ -22,6 +22,8 @@ async function buttonHandler(interaction) {
 
   const pending = getPending(interaction.user.id);
   let confirmed = false;
+  let deletions = 0;
+
   // Confirm Button
   if (interaction.customId === "confirm") {
     // If there is no pending (expired?)
@@ -35,13 +37,9 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
-    /*
-     ... functionality
-     Check for score
-     if score exists
-     delete score, reply saying score deleted
-     else, reply saying no score found
-    */
+    // Database handling
+    const { redis } = interaction.client;
+    deletions = await redis.del(`${interaction.user.id}:${pending.exercise}`);
 
     deletePending(interaction.user.id);
   }
@@ -52,9 +50,15 @@ async function buttonHandler(interaction) {
   }
 
   // Handle text outputs
-  if (confirmed) {
+  if (confirmed && deletions === 1) {
     await interaction.channel.send({
       content: `${interaction.user} removed their score for **${pending.exercise}**`,
+    });
+  }
+  else if (confirmed && deletions === 0) {
+    await interaction.followUp({
+      content: "No score found, nothing was removed.",
+      flags: MessageFlags.Ephemeral,
     });
   } else {
     await interaction.followUp({

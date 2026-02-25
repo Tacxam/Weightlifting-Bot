@@ -7,8 +7,7 @@ async function redis() {
 		.on("error", (err) => console.log("Redis Client Error", err))
 		.connect();
 
-	await client.set("key", "value");
-	const value = await client.get("key");
+	await client.del("key");
 	client.destroy();
 }
 

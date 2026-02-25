@@ -41,7 +41,7 @@ async function buttonHandler(interaction) {
 
     // If there is already a value for this user for this exercise, delete entry
     if (value !== null) {
-      redis.del(`${interaction.user.id}:${pending.exercise}`);
+      await redis.del(`${interaction.user.id}:${pending.exercise}`);
     }
     
     await redis.set(`${interaction.user.id}:${pending.exercise}`, pending.weight);
