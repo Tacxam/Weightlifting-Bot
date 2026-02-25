@@ -23,6 +23,7 @@ async function buttonHandler(interaction) {
   const pending = getPending(interaction.user.id);
   let confirmed = false;
   let removals = 0;
+  let score;
 
   // Confirm Button
   if (interaction.customId === "confirm") {
@@ -39,6 +40,7 @@ async function buttonHandler(interaction) {
 
     // Database handling
     const { redis } = interaction.client;
+    score = await redis.zScore(`${pending.exercise}`, interaction.user.id);
     removals = await redis.zRem(`${pending.exercise}`, interaction.user.id);
 
     deletePending(interaction.user.id);
@@ -52,7 +54,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed && removals === 1) {
     await interaction.channel.send({
-      content: `${interaction.user} removed their score for **${pending.exercise}**`,
+      content: `${interaction.user} removed their score for **${pending.exercise}** (${score}kg)`,
     });
   }
   else if (confirmed && removals === 0) {
