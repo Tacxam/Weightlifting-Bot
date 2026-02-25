@@ -35,8 +35,15 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
-    // Database
+    // Database handling
     const { redis } = interaction.client;
+    const value = await redis.get(`${interaction.user.id}:${pending.exercise}`);
+
+    // If there is already a value for this user for this exercise, delete entry
+    if (value !== null) {
+      redis.del(`${interaction.user.id}:${pending.exercise}`);
+    }
+    
     await redis.set(`${interaction.user.id}:${pending.exercise}`, pending.weight);
 
     deletePending(interaction.user.id);
