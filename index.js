@@ -2,11 +2,21 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const { token } = require("./config.json");
+const { createClient } = require("redis");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
 client.cooldowns = new Collection();
+
+// Connect to redis
+const redisClient = createClient({
+  url: "redis://localhost:8081",
+})
+  .on("error", (err) => console.log("Redis Client Error", err))
+  .connect();
+
+client.redis = redisClient;
 
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
