@@ -9,14 +9,21 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.commands = new Collection();
 client.cooldowns = new Collection();
 
-// Connect to redis
-const redisClient = createClient({
-  url: "redis://localhost:8081",
-})
-  .on("error", (err) => console.log("Redis Client Error", err))
-  .connect();
+// Immediately Invoked Function Expression IIFE syntax
+(async () => {
+  // Create client
+  const redisClient = createClient({
+    url: "redis://localhost:8081",
+  });
 
-client.redis = redisClient;
+  // Prepare error listener
+  redisClient.on("error", (err) => console.log("Redis Client Error", err));
+
+  await redisClient.connect();
+
+  client.redis = redisClient;  
+})();
+
 
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);

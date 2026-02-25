@@ -35,7 +35,9 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
-    // ... functionality
+    // Database
+    const { redis } = interaction.client;
+    await redis.set(`${interaction.user.id}:${pending.exercise}`, pending.weight);
 
     deletePending(interaction.user.id);
   }
