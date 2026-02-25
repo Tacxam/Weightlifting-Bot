@@ -5,8 +5,8 @@
 # Functionality
 
 ## Leaderboard
-[ ] addScore needs to store to a DB??
-[ ] delScore needs to delete from a DB??
+[X] addScore needs to store to a DB
+[X] delScore needs to delete from a DB
 [ ] Create score confirmation functionality with pendingSubmission.js
 [X] addScore implement confirmation
 [X] **fix** addScore "Submission expired message" even after successful submission

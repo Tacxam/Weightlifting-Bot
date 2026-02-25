@@ -37,14 +37,7 @@ async function buttonHandler(interaction) {
 
     // Database handling
     const { redis } = interaction.client;
-    const value = await redis.get(`${interaction.user.id}:${pending.exercise}`);
-
-    // If there is already a value for this user for this exercise, delete entry
-    if (value !== null) {
-      await redis.del(`${interaction.user.id}:${pending.exercise}`);
-    }
-    
-    await redis.set(`${interaction.user.id}:${pending.exercise}`, pending.weight);
+    await redis.zAdd(`${pending.exercise}`, [{value: interaction.user.id, score: pending.weight}]);
 
     deletePending(interaction.user.id);
   }
@@ -72,7 +65,7 @@ module.exports = {
   name: "addscore",
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
-    .setDescription("Add a score.")
+    .setDescription("Add a score. If score already exists, overwrites old score.")
     .addIntegerOption((option) =>
       option
         .setName("weight")

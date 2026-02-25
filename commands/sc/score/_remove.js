@@ -22,7 +22,7 @@ async function buttonHandler(interaction) {
 
   const pending = getPending(interaction.user.id);
   let confirmed = false;
-  let deletions = 0;
+  let removals = 0;
 
   // Confirm Button
   if (interaction.customId === "confirm") {
@@ -39,7 +39,7 @@ async function buttonHandler(interaction) {
 
     // Database handling
     const { redis } = interaction.client;
-    deletions = await redis.del(`${interaction.user.id}:${pending.exercise}`);
+    removals = await redis.zRem(`${pending.exercise}`, interaction.user.id);
 
     deletePending(interaction.user.id);
   }
@@ -50,12 +50,12 @@ async function buttonHandler(interaction) {
   }
 
   // Handle text outputs
-  if (confirmed && deletions === 1) {
+  if (confirmed && removals === 1) {
     await interaction.channel.send({
       content: `${interaction.user} removed their score for **${pending.exercise}**`,
     });
   }
-  else if (confirmed && deletions === 0) {
+  else if (confirmed && removals === 0) {
     await interaction.followUp({
       content: "No score found, nothing was removed.",
       flags: MessageFlags.Ephemeral,
