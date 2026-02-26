@@ -46,10 +46,14 @@ module.exports = {
 			let list = "";
 
 			for (const score of scores) {
-				list += `**${score.name}:** ${score.score}kg\n`
+				list += `**${score.name}**: ${score.score}kg\n`
 			}
 
-			content = `**${user}'s scores:\n**` + list;
+			content = `${user}'s scores:\n` + list;
 		}
+
+		interaction.reply({
+			content: content,
+		})
 	},
 };
