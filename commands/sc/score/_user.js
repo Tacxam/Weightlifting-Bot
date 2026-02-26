@@ -12,7 +12,7 @@ module.exports = {
   name: "user",
   data: new SlashCommandSubcommandBuilder()
     .setName("user")
-    .setDescription("Display user's scores")
+    .setDescription("Display user's PRs")
     .addUserOption((option) =>
       option
         .setName("user")
@@ -41,7 +41,7 @@ module.exports = {
 
 		// If no scores
 		if (scores.length === 0) {
-			content = `${user} has no recorded scores`
+			content = `${user} has no recorded PRs`
 		} else {
 			let list = "";
 

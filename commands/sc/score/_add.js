@@ -65,7 +65,7 @@ module.exports = {
   name: "addscore",
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
-    .setDescription("Add a score. If score already exists, overwrites old score.")
+    .setDescription("Add a PR. If PR already exists, overwrites old PR.")
     .addIntegerOption((option) =>
       option
         .setName("weight")

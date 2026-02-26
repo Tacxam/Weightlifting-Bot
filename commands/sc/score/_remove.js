@@ -54,12 +54,12 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed && removals === 1) {
     await interaction.channel.send({
-      content: `${interaction.user} removed their score for **${pending.exercise}** (**${score}kg**)`,
+      content: `${interaction.user} removed their PR for **${pending.exercise}** (**${score}kg**)`,
     });
   }
   else if (confirmed && removals === 0) {
     await interaction.followUp({
-      content: "No score found, nothing was removed.",
+      content: "No PR found, nothing was removed.",
       flags: MessageFlags.Ephemeral,
     });
   } else {
@@ -79,7 +79,7 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise score that is being removed.")
+        .setDescription("The exercise PR that is being removed.")
         .setRequired(true)
         .addChoices(...exerciseChoices),
     ),
@@ -100,7 +100,7 @@ module.exports = {
     );
 
     const msg = await interaction.reply({
-      content: `You want to remove your score for ${exercise}. Is this correct?`,
+      content: `You want to remove your PR for ${exercise}. Is this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object

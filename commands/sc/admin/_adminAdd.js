@@ -63,17 +63,17 @@ module.exports = {
   name: "add",
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
-    .setDescription("Add a score to a user. (Admin Only)")
+    .setDescription("Add a PR to a user. (Admin Only)")
     .addUserOption((option) =>
       option
         .setName("user")
-        .setDescription("The user whose score is being added")
+        .setDescription("The user whose PR is being added")
         .setRequired(true),
     )
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise score that is being added")
+        .setDescription("The exercise PR that is being added")
         .setRequired(true)
 				.addChoices(...exerciseChoices),
     )

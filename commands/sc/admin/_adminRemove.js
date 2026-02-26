@@ -69,17 +69,17 @@ module.exports = {
   name: "remove",
   data: new SlashCommandSubcommandBuilder()
     .setName("remove")
-    .setDescription("Remove a user's score. (Admin Only)")
+    .setDescription("Remove a user's PR. (Admin Only)")
     .addUserOption((option) =>
       option
         .setName("user")
-        .setDescription("The user whose score is being removed")
+        .setDescription("The user whose PR is being removed")
         .setRequired(true),
     )
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise score that is being removed")
+        .setDescription("The exercise PR that is being removed")
         .setRequired(true)
         .addChoices(...exerciseChoices),
     ),

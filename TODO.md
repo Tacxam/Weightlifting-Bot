@@ -14,6 +14,7 @@
 [X] adminDelScore implement confirmation
 [X] user implement functionality
 [ ] leaderboard implement functionality
+[ ] distinguish male/female user scores
 
 # Powerlifting
 [ ] DOTS calculations
