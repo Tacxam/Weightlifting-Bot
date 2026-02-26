@@ -12,7 +12,8 @@ const {
   getPending,
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
-const genderDivisions = require("../../../utils/pendingDivisions.js");
+const genderDivisions = require("../../../utils/genderDivisions.js");
+const weightDivisions = require("../../../utils/weightDivisions.js")
 
 module.exports = {
   name: "division",
