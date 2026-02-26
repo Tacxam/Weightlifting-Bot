@@ -13,6 +13,7 @@ node index.js
 - remove: removes score from user
 - view: displays exercise leaderboard
 - dots: calculates user's DOTS
+- user: displays user's lifts
 
 **/admin**
 - add: add score to a user

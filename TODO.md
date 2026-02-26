@@ -12,7 +12,8 @@
 [X] **fix** addScore "Submission expired message" even after successful submission
 [X] delScore implement confirmation
 [X] adminDelScore implement confirmation
-[ ] user implement functionality
+[X] user implement functionality
+[ ] leaderboard implement functionality
 
 # Powerlifting
 [ ] DOTS calculations
