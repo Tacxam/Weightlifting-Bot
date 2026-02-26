@@ -17,7 +17,6 @@ module.exports = {
 
   async execute(interaction) {
     const exercise = interaction.options.addStringOption("exercise");
-
 		// ...functionality
 	},
 };

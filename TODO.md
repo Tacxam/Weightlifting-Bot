@@ -4,14 +4,15 @@
 
 # Functionality
 
-## Leaderboard
+## Score
 [X] addScore needs to store to a DB
 [X] delScore needs to delete from a DB
 [ ] Create score confirmation functionality with pendingSubmission.js
 [X] addScore implement confirmation
 [X] **fix** addScore "Submission expired message" even after successful submission
 [X] delScore implement confirmation
-[ ] adminDelScore implement confirmation
+[X] adminDelScore implement confirmation
+[ ] 
 
 # Powerlifting
 [ ] DOTS calculations
