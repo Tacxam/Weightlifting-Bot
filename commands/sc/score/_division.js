@@ -13,13 +13,13 @@ const {
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
-const weightDivisions = require("../../../utils/weightDivisions.js")
+const { maleWeightDivisions, femaleWeightDivisions } = require("../../../utils/weightDivisions.js")
 
 module.exports = {
   name: "division",
   data: new SlashCommandSubcommandBuilder()
     .setName("division")
-    .setDescription("Sets user competition division")
+    .setDescription("Sets user competition division. (If don't want to share gender or weight, Select Open for gender and 0 for weight)")
     .addStringOption((option) =>
       option
         .setName("gender")
@@ -27,15 +27,15 @@ module.exports = {
         .setRequired(true)
         .addChoices(...genderDivisions),
     )
-    .addStringOption((option) =>
+    .addIntegerOption((option) =>
       option
         .setName("weight")
         .setDescription("The user weight being submitted")
         .setRequired(true)
-        .addChoices(...weightDivisions),
     ),
 
 	async execute(interaction) {
-		
+		// Handle determining weight class for inputted weight
+    // Weight class is key, user is value
 	}
 };
