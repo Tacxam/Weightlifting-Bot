@@ -122,8 +122,9 @@ module.exports = {
     const gender = interaction.options.getString("gender");
     const userWeight = interaction.options.getInteger("userWeight");
 
-    const weightDivisions = gender === "Male" ? divisions.Male : divisions.Female;
+    const weightDivisions = gender === "Male" ? divisions.Male : divisions.Female;      
     
+
 
     // Add entry to the pending object
     setPending(interaction.user.id, { weight, exercise, gender, });
