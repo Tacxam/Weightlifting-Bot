@@ -81,14 +81,19 @@ module.exports = {
         .setRequired(true)
     ),
 
+  /*
+    Handle determining weight class for inputted weight
+    Keys: Weight class, gender, users
+    Values: User.id, User.id, Weight class-gender-user.id
+    The above are what will be stored in the DB for organising data
+  */
 	async execute(interaction) {
-		// Handle determining weight class for inputted weight
-    // Weight class is key, user is value
     const gender = interaction.options.getStringOption("gender");
     const weight = interaction.options.getIntegerOption("weight");
 
     const weightDivisions = gender === "Male" ? maleWeightDivisions : femaleWeightDivisions;
 
-    
+    // Check if user is already registered
+
 	}
 };
