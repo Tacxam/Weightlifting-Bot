@@ -14,9 +14,9 @@
 [X] adminDelScore implement confirmation
 [X] user implement functionality
 [ ] leaderboard implement functionality
-[ ] distinguish male/female user scores (or open leaderboard)
-		Condition: If users submit scores without a division, it will automatically be placed into an open division.
-							 If users enter a division after submitting scores, their previous scores will be pushed into the new division
+[ ] Complete powerlifting equivalent commands
+[ ] Complete orm
+[ ] Complete leaderboard for PL
 
 # Powerlifting
 [ ] DOTS calculations
