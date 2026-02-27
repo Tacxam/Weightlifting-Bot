@@ -84,5 +84,11 @@ module.exports = {
 	async execute(interaction) {
 		// Handle determining weight class for inputted weight
     // Weight class is key, user is value
+    const gender = interaction.options.getStringOption("gender");
+    const weight = interaction.options.getIntegerOption("weight");
+
+    const weightDivisions = gender === "Male" ? maleWeightDivisions : femaleWeightDivisions;
+
+    
 	}
 };
