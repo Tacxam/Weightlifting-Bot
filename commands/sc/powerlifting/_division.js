@@ -66,7 +66,7 @@ module.exports = {
   name: "division",
   data: new SlashCommandSubcommandBuilder()
     .setName("division")
-    .setDescription("Sets user competition division. (If don't want to share gender or weight, Select Open for gender and 0 for weight)")
+    .setDescription("Sets user competition division.")
     .addStringOption((option) =>
       option
         .setName("gender")
