@@ -15,6 +15,53 @@ const {
 const genderDivisions = require("../../../utils/genderDivisions.js");
 const { maleWeightDivisions, femaleWeightDivisions } = require("../../../utils/weightDivisions.js")
 
+// Button handling (Default code currently)
+async function buttonHandler(interaction) {
+  // Remove buttons
+  await interaction.update({
+    components: [],
+  });
+
+  const pending = getPending(interaction.user.id);
+  let confirmed = false;
+  // Confirm Button
+  if (interaction.customId === "confirm") {
+    // If there is no pending (expired?)
+    if (!pending) {
+      return interaction.update({
+        content:
+          "No pending submission found, the command may have expired. Please try running the command again.",
+        components: [],
+      });
+    }
+
+    confirmed = true;
+
+    // Database handling
+    const { redis } = interaction.client;
+    await redis.zAdd(`${pending.exercise}`, [{value: interaction.user.id, score: pending.weight}]);
+
+    deletePending(interaction.user.id);
+  }
+
+  // Cancel Button
+  if (interaction.customId === "cancel") {
+    deletePending(interaction.user.id);
+  }
+
+  // Handle text outputs
+  if (confirmed) {
+    await interaction.channel.send({
+      content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}**`,
+    });
+  } else {
+    await interaction.followUp({
+      content: "Command cancelled, nothing was submitted.",
+      flags: MessageFlags.Ephemeral,
+    });
+  }
+}
+
 module.exports = {
   name: "division",
   data: new SlashCommandSubcommandBuilder()
