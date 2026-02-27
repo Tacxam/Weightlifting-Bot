@@ -5,6 +5,7 @@ const {
   ButtonStyle,
   MessageFlags,
   ComponentType,
+  PermissionFlagsBits
 } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
 const {
@@ -81,6 +82,23 @@ module.exports = {
     ),
 
   async execute(interaction) {
+    if (!interaction.inGuild()) {
+      return interaction.reply({
+        content: "This command can only be used in a server.",
+        flags: MessageFlags.Ephemeral,
+      });
+    }
+
+    const hasMember = interaction.member.roles.cache.has(memberRole);
+    const isAdmin = interaction.member.permissions.has(PermissionFlagsBits.Administrator);
+
+    if (!hasMember && !isAdmin) {
+      return interaction.reply({
+        content: "Missing member role",
+        flags: MessageFlags.Ephemeral,
+      })
+    }
+
     // Store values from options
     const weight = interaction.options.getInteger("weight");
     const exercise = interaction.options.getString("exercise");
