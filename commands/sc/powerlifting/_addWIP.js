@@ -122,7 +122,7 @@ module.exports = {
     const gender = interaction.options.getString("gender");
     const userWeight = interaction.options.getInteger("userWeight");
 
-     
+    const weightDivision = getWeightDivision(userWeight, gender);
     
     
 
