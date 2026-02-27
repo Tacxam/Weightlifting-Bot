@@ -15,7 +15,7 @@ const {
 } = require("../../../utils/pendingSubmission.js");
 const memberRole = require("../../../utils/roles.js")
 const genderDivisions = require("../../../utils/genderDivisions.js");
-const { maleWeightDivisions, femaleWeightDivisions } = require("../../../utils/weightDivisions.js")
+const { divisions, getWeightDivision } = require("../../../utils/weightDivisions.js")
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -119,13 +119,14 @@ module.exports = {
     // Store values from options
     const weight = interaction.options.getInteger("weight");
     const exercise = interaction.options.getString("exercise");
-    const gender = interaction.options.getStringOption("gender");
-    const userWeight = interaction.options.getIntegerOption("userWeight");
+    const gender = interaction.options.getString("gender");
+    const userWeight = interaction.options.getInteger("userWeight");
 
-    const weightDivisions = gender === "Male" ? maleWeightDivisions : femaleWeightDivisions;
+    const weightDivisions = gender === "Male" ? divisions.male : divisions.female;
+    
 
     // Add entry to the pending object
-    setPending(interaction.user.id, { weight, exercise });
+    setPending(interaction.user.id, { weight, exercise, gender, });
 
     // Create button components
     const row = new ActionRowBuilder().addComponents(
