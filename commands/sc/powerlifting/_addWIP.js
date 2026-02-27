@@ -122,7 +122,7 @@ module.exports = {
     const gender = interaction.options.getString("gender");
     const userWeight = interaction.options.getInteger("userWeight");
 
-    const weightDivisions = gender === "Male" ? divisions.male : divisions.female;
+    const weightDivisions = gender === "Male" ? divisions.Male : divisions.Female;
     
 
     // Add entry to the pending object
