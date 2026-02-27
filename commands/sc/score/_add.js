@@ -83,6 +83,7 @@ module.exports = {
     ),
 
   async execute(interaction) {
+    // Role checking
     if (!interaction.inGuild()) {
       return interaction.reply({
         content: "This command can only be used in a server.",

@@ -14,6 +14,8 @@ const {
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
 const memberRole = require("../../../utils/roles.js")
+const genderDivisions = require("../../../utils/genderDivisions.js");
+const { maleWeightDivisions, femaleWeightDivisions } = require("../../../utils/weightDivisions.js")
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -80,9 +82,23 @@ module.exports = {
         .setDescription("The exercise being submitted.")
         .setRequired(true)
         .addChoices(...exerciseChoices),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("gender")
+        .setDescription("The gender being submitted")
+        .setRequired(true)
+        .addChoices(...genderDivisions),
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName("userWeight")
+        .setDescription("The user weight being submitted")
+        .setRequired(true)
     ),
 
   async execute(interaction) {
+    // Role checking
     if (!interaction.inGuild()) {
       return interaction.reply({
         content: "This command can only be used in a server.",
@@ -103,6 +119,10 @@ module.exports = {
     // Store values from options
     const weight = interaction.options.getInteger("weight");
     const exercise = interaction.options.getString("exercise");
+    const gender = interaction.options.getStringOption("gender");
+    const userWeight = interaction.options.getIntegerOption("userWeight");
+
+    const weightDivisions = gender === "Male" ? maleWeightDivisions : femaleWeightDivisions;
 
     // Add entry to the pending object
     setPending(interaction.user.id, { weight, exercise });
