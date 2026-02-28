@@ -1,11 +1,9 @@
 # Weightlifting-Bot
 Bot for the RMIT Lifting Association
 
-When creating new commands:
-node deploy-commands.js
-
-When running bot:
-node index.js
+# Restraints:
+**powerlifting**
+- Users can only possess a single score for any particular division, older scores will be overwritten if a new score is submitted.
 
 # Commands:
 **/s**

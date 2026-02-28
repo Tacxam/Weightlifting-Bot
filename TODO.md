@@ -1,3 +1,8 @@
+When creating new commands:
+node deploy-commands.js
+
+When running bot:
+node index.js
 
 # Utility
 [ ] addChoices for reload command for every command
