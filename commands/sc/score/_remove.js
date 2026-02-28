@@ -42,7 +42,10 @@ async function buttonHandler(interaction) {
 
     // Database handling
     const { redis } = interaction.client;
+
+    // Get score for interaction reply
     score = await redis.zScore(`${pending.exercise}`, interaction.user.id);
+
     removals = await redis.zRem(`${pending.exercise}`, interaction.user.id);
 
     deletePending(interaction.user.id);

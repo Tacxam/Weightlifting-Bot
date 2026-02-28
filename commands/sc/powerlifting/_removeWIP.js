@@ -42,8 +42,13 @@ async function buttonHandler(interaction) {
 
     // Database handling
     const { redis } = interaction.client;
-    score = await redis.zScore(`${pending.exercise}`, interaction.user.id);
-    removals = await redis.zRem(`${pending.exercise}`, interaction.user.id);
+    
+    // Submit score to relevant leaderboard
+    const redisField = `${pending.gender}:${pending.weightDivision}:${pending.exercise}`;
+
+    // Get score for interaction reply
+    score = await redis.zScore(redisField, interaction.user.id);
+    removals = await redis.zRem(redisField, interaction.user.id);
 
     deletePending(interaction.user.id);
   }

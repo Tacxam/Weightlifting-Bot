@@ -41,23 +41,23 @@ async function buttonHandler(interaction) {
 
     // Database handling
     const { redis } = interaction.client;
-    
+
     // Submit score to relevant leaderboard
     const redisField = `${pending.gender}:${pending.weightDivision}:${pending.exercise}`;
 
-    await redis.zAdd(
-      redisField,
-      [
-        {
-          value: interaction.user.id,
-          score: pending.weight,
-        },
-      ],
-    );
+    await redis.zAdd(redisField, [
+      {
+        value: interaction.user.id,
+        score: pending.weight,
+      },
+    ]);
     // Update user profile hash
     await redis.hSet(`user:${interaction.user.id}:lifts`, {
-      [redisField]: pending.weight, // Computer property name syntax
-      dateAdded: pending.createdAt,
+      // Computer property name syntax
+      [redisField]: JSON.stringify({
+        weight: pending.weight,
+        dateAdded: pending.createdAt,
+      }),
     });
 
     deletePending(interaction.user.id);
