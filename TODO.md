@@ -19,7 +19,7 @@ node index.js
 
 **remove**
 [X] Set permissions to only members or admin
-[ ] Reconfigure to handle hashing
+[X] Reconfigure to handle hashing
 
 **user**
 [ ] Configure to handle hashing
