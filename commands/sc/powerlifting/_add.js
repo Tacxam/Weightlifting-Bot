@@ -56,6 +56,7 @@ async function buttonHandler(interaction) {
     // Update user profile hash
     await redis.hSet(`user:${interaction.user.id}:lifts`, {
       [redisField]: pending.weight, // Computer property name syntax
+      dateAdded: pending.createdAt,
     });
 
     deletePending(interaction.user.id);
