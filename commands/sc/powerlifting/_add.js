@@ -41,6 +41,7 @@ async function buttonHandler(interaction) {
 
     // Database handling
     const { redis } = interaction.client;
+    
     // Submit score to relevant leaderboard
     const redisField = `${pending.gender}:${pending.weightDivision}:${pending.exercise}`;
 
