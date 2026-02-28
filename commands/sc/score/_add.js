@@ -52,7 +52,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}**`,
+      content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}**.`,
     });
   } else {
     await interaction.followUp({
