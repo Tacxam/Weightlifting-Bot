@@ -14,6 +14,8 @@ const {
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
 const memberRole = require("../../../utils/roles.js")
+const genderDivisions = require("../../../utils/genderDivisions.js");
+const { getWeightDivision } = require("../../../utils/weightDivisions.js");
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -64,7 +66,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed && removals === 1) {
     await interaction.channel.send({
-      content: `${interaction.user} removed their PR for **${pending.exercise}** (**${score}kg**.)`,
+      content: `${interaction.user} removed their PR for **${pending.exercise}** (**${score}kg**).`,
     });
   }
   else if (confirmed && removals === 0) {
@@ -89,10 +91,24 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise PR that is being removed.")
+        .setDescription("The exercise being submitted.")
         .setRequired(true)
         .addChoices(...exerciseChoices),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("gender")
+        .setDescription("The gender being submitted")
+        .setRequired(true)
+        .addChoices(...genderDivisions),
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName("userweight")
+        .setDescription("The user weight being submitted")
+        .setRequired(true),
     ),
+
   async execute(interaction) {
     // Role checking
     if (!interaction.inGuild()) {
@@ -112,9 +128,19 @@ module.exports = {
       })
     }
 
+    // Store values from options
     const exercise = interaction.options.getString("exercise");
+    const gender = interaction.options.getString("gender");
+    const userWeight = interaction.options.getInteger("userweight");
 
-    setPending(interaction.user.id, { exercise });
+    const weightDivision = getWeightDivision(userWeight, gender);
+
+    // Add entry to the pending object
+    setPending(interaction.user.id, {
+      exercise,
+      gender,
+      weightDivision,
+    });
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
