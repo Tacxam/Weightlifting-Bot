@@ -4,7 +4,8 @@ Bot for the RMIT Lifting Association
 # Restraints:
 **powerlifting**
 - Users can only possess a single score for any particular division, older scores will be overwritten if a new score is submitted.
-
+- Scores that are added, are both inputted into a leaderboard set and entered into a unique user hash. The leaderboard makes it easier to manage scores,
+    the user hash makes it easy to find scores submitted by the user.
 # Commands:
 **/s**
 - add: adds score to user
