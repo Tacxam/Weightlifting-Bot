@@ -50,6 +50,9 @@ async function buttonHandler(interaction) {
     score = await redis.zScore(redisField, interaction.user.id);
     removals = await redis.zRem(redisField, interaction.user.id);
 
+    // Update user profile hash
+    await redis.hDel(`user:${interaction.user.id}:lifts`, redisField);
+
     deletePending(interaction.user.id);
   }
 
