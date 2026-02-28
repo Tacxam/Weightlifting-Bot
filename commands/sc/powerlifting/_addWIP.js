@@ -5,7 +5,7 @@ const {
   ButtonStyle,
   MessageFlags,
   ComponentType,
-  PermissionFlagsBits
+  PermissionFlagsBits,
 } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
 const {
@@ -13,9 +13,9 @@ const {
   getPending,
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
-const memberRole = require("../../../utils/roles.js")
+const memberRole = require("../../../utils/roles.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
-const { divisions, getWeightDivision } = require("../../../utils/weightDivisions.js")
+const { getWeightDivision } = require("../../../utils/weightDivisions.js");
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -41,7 +41,13 @@ async function buttonHandler(interaction) {
 
     // Database handling
     const { redis } = interaction.client;
-    await redis.zAdd(`${pending.exercise}`, [{value: interaction.user.id, score: pending.weight}]);
+    await redis.zAdd(`${pending.gender}:${pending.weightDivision}`, [
+      {
+        value: interaction.user.id,
+        score: pending.weight,
+        submitted: pending.createdAt,
+      },
+    ]);
 
     deletePending(interaction.user.id);
   }
@@ -54,7 +60,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}**`,
+      content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}** in the ${pending.gender} ${pending.weightDivision}kg division.`,
     });
   } else {
     await interaction.followUp({
@@ -92,9 +98,9 @@ module.exports = {
     )
     .addIntegerOption((option) =>
       option
-        .setName("userWeight")
+        .setName("userweight")
         .setDescription("The user weight being submitted")
-        .setRequired(true)
+        .setRequired(true),
     ),
 
   async execute(interaction) {
@@ -107,28 +113,32 @@ module.exports = {
     }
 
     const hasMember = interaction.member.roles.cache.has(memberRole);
-    const isAdmin = interaction.member.permissions.has(PermissionFlagsBits.Administrator);
+    const isAdmin = interaction.member.permissions.has(
+      PermissionFlagsBits.Administrator,
+    );
 
     if (!hasMember && !isAdmin) {
       return interaction.reply({
         content: "Missing member role",
         flags: MessageFlags.Ephemeral,
-      })
+      });
     }
 
     // Store values from options
     const weight = interaction.options.getInteger("weight");
     const exercise = interaction.options.getString("exercise");
     const gender = interaction.options.getString("gender");
-    const userWeight = interaction.options.getInteger("userWeight");
+    const userWeight = interaction.options.getInteger("userweight");
 
     const weightDivision = getWeightDivision(userWeight, gender);
-    
-    
-
 
     // Add entry to the pending object
-    setPending(interaction.user.id, { weight, exercise, gender, });
+    setPending(interaction.user.id, {
+      weight,
+      exercise,
+      gender,
+      weightDivision,
+    });
 
     // Create button components
     const row = new ActionRowBuilder().addComponents(
@@ -144,7 +154,7 @@ module.exports = {
 
     // Request confirmation of submission
     const msg = await interaction.reply({
-      content: `You want to submit ${weight}kg for ${exercise}.\nIs this correct?`,
+      content: `You want to submit ${weight}kg for ${exercise} in the ${gender} ${weightDivision}kg division.\nIs this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object
