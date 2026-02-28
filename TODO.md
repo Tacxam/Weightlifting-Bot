@@ -31,7 +31,7 @@ node index.js
 
 **remove**
 [X] Set permissions to only members or admin
-[ ] Set up database integration
+[X] Set up database integration
 
 **user**
 [ ] Configure to handle hashing
