@@ -15,15 +15,23 @@ node index.js
 ## Score
 **add**
 [X] Set permissions to only members or admin
+[X] Reconfigure to handle hashing
 
 **remove**
 [X] Set permissions to only members or admin
+[ ] Reconfigure to handle hashing
+
+**user**
+[ ] Configure to handle hashing
 
 ## Powerlifting
 **add**
 [X] Set permissions to only members or admin
-[ ] Set up database integration
+[X] Set up database integration
 
 **remove**
 [X] Set permissions to only members or admin
 [ ] Set up database integration
+
+**user**
+[ ] Configure to handle hashing
