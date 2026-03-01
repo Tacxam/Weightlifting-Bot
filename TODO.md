@@ -5,7 +5,7 @@ When running bot:
 node index.js
 
 # Utility
-[ ] addChoices for reload command for every command
+[ ] Normalise command names, i.e la, lpl, ls and l for normal commands to make it easier to tell what is a bot command
 
 # Functionality
 ## Admin
