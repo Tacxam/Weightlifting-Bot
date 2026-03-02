@@ -23,11 +23,19 @@ module.exports = {
   async execute(interaction) {
 		const user = interaction.options.getUser("user");
 
-		const scores = [];
+		const redisKey = `user:${user}:lifts`;
 
     // Database handling
     const { redis } = interaction.client;
-    for (const choice of exerciseChoices) {
+		const scores = await redis.hGetAll(redisKey)
+
+		if (scores === 0) {
+			return interaction.reply({
+				content: `${user} has not recorded any lifts.`,
+			})
+		}
+
+    for (const score of scores) {
 			const exercise = choice.value;
 			const score = await redis.zScore(`${exercise}`, user.id);
 
@@ -38,22 +46,5 @@ module.exports = {
 		}
 
 		let content;
-
-		// If no scores
-		if (scores.length === 0) {
-			content = `${user} has no recorded PRs`
-		} else {
-			let list = "";
-
-			for (const score of scores) {
-				list += `**${score.name}**: ${score.score}kg\n`
-			}
-
-			content = `${user}'s scores:\n` + list;
-		}
-
-		interaction.reply({
-			content: content,
-		})
 	},
 };
