@@ -23,28 +23,28 @@ module.exports = {
   async execute(interaction) {
 		const user = interaction.options.getUser("user");
 
-		const redisKey = `user:${user}:lifts`;
+		const redisKey = `user:${user.id}:lifts`;
+
+		let content = "";
 
     // Database handling
     const { redis } = interaction.client;
-		const scores = await redis.hGetAll(redisKey)
+		const lifts = await redis.hGetAll(redisKey)
 
-		if (scores === 0) {
+		if (Object.keys(lifts).length === 0) {
 			return interaction.reply({
 				content: `${user} has not recorded any lifts.`,
 			})
 		}
 
-    for (const score of scores) {
-			const exercise = choice.value;
-			const score = await redis.zScore(`${exercise}`, user.id);
+    for (const [field, value] of Object.entries(lifts)) {
+			const lift = JSON.parse(value);
 
-			// If score exists, add to array
-			if (score !== null) {
-				scores.push({name: choice.name, score: score})
-			}
+			content += `${field} - ${lift.weight}kg\n`;
 		}
 
-		let content;
+		interaction.reply({
+			content: `**${user}'s scores:**\n${content}`,
+		})		
 	},
 };
