@@ -5,7 +5,7 @@ const path = require("node:path");
 const subcommands = new Collection();
 
 // Pull subcommands
-const subcommandPath = path.join(__dirname, "../sc/powerlifting");
+const subcommandPath = path.join(__dirname, "../sc/utility");
 const subcommandFiles = fs
   .readdirSync(subcommandPath)
   .filter((file) => file.endsWith(".js"));
@@ -18,7 +18,7 @@ for (const file of subcommandFiles) {
 
 	// Create builder data
 	const builder = new SlashCommandBuilder()
-		.setName("lpl")
+		.setName("l")
 		.setDescription("...")
 		
 		for (const subcommand of subcommands.values()) {
@@ -27,7 +27,7 @@ for (const file of subcommandFiles) {
 
 		// Export
 		module.exports = {
-			name: "powerlifting",
+			name: "score",
 			data: builder,
 
 			async execute(interaction) {

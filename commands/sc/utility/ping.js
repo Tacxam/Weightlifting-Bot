@@ -1,7 +1,7 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandSubcommandBuilder } = require("discord.js");
 
 module.exports = {
-  data: new SlashCommandBuilder()
+  data: new SlashCommandSubcommandBuilder()
     .setName("ping")
     .setDescription("Replies with Pong!"),
   cooldown: 5,
