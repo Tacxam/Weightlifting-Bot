@@ -1,5 +1,7 @@
 const { SlashCommandSubcommandBuilder } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
+const genderDivisions = require("../../../utils/genderDivisions.js");
+const { getWeightDivision } = require("../../../utils/weightDivisions.js");
 
 // Displays Leaderboard
 module.exports = {
@@ -13,10 +15,23 @@ module.exports = {
         .setDescription("The relevant exercise leaderboard")
         .setRequired(true)
         .setChoices(...exerciseChoices),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("gender")
+        .setDescription("The division gender")
+        .setRequired(true)
+        .addChoices(...genderDivisions),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("weightclass")
+        .setDescription("The division weight class")
+        .setRequired(true),
     ),
 
   async execute(interaction) {
     const exercise = interaction.options.addStringOption("exercise");
-		// ...functionality
-	},
+    // ...functionality
+  },
 };
