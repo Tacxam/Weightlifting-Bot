@@ -22,7 +22,7 @@ node index.js
 [X] Reconfigure to handle hashing
 
 **user**
-[ ] Configure to handle hashing
+[X] Configure to handle hashing
 
 ## Powerlifting
 **add**
@@ -34,4 +34,7 @@ node index.js
 [X] Set up database integration
 
 **user**
-[ ] Configure to handle hashing
+[X] Configure to handle hashing
+
+## Utility
+[ ] Configure scoreLeaderboardInitialiser

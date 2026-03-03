@@ -10,15 +10,21 @@ module.exports = {
   name: "leaderboard",
   data: new SlashCommandSubcommandBuilder()
     .setName("leaderboard")
-    .setDescription("Display leaderboard of submitted scores")
+    .setDescription("Initialise a leaderboard of submitted scores.")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addChannelOption((option) =>
       option
-        .setName("exercise")
-        .setDescription("The relevant exercise leaderboard")
+        .setName("channel")
+        .setDescription("The relevant channel to place leaderboard.")
         .setRequired(true)
         .addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement),
-    ),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("exercise")
+        .setDescription("The exercise being leaderboarded."))
+        .setRequired(true)
+        .addChoices(...exerciseChoices),
 
   async execute(interaction) {
     const exercise = interaction.options.addStringOption("exercise");
