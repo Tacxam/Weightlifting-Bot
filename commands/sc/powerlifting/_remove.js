@@ -83,7 +83,7 @@ async function buttonHandler(interaction) {
 
 // Delete score from leaderboard
 module.exports = {
-  name: "removescore",
+  name: "remove",
   data: new SlashCommandSubcommandBuilder()
     .setName("remove")
     .setDescription("Remove a score.")
@@ -101,7 +101,7 @@ module.exports = {
         .setRequired(true)
         .addChoices(...genderDivisions),
     )
-    .addIntegerOption((option) =>
+    .addNumberOption((option) =>
       option
         .setName("userweight")
         .setDescription("The user weight being submitted")
@@ -132,7 +132,7 @@ module.exports = {
     // Store values from options
     const exercise = interaction.options.getString("exercise");
     const gender = interaction.options.getString("gender");
-    const userWeight = interaction.options.getInteger("userweight");
+    const userWeight = interaction.options.getNumber("userweight");
 
     const weightDivision = getWeightDivision(userWeight, gender);
 

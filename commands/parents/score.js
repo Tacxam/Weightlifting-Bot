@@ -18,7 +18,7 @@ for (const file of subcommandFiles) {
 
 	// Create builder data
 	const builder = new SlashCommandBuilder()
-		.setName("ls")
+		.setName("score")
 		.setDescription("...")
 		
 		for (const subcommand of subcommands.values()) {

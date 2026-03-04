@@ -83,11 +83,11 @@ async function buttonHandler(interaction) {
 
 // Add score to leaderboard (Delete any previous score)
 module.exports = {
-  name: "addscore",
+  name: "add",
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
     .setDescription("Add a PR. If PR already exists, overwrites old PR.")
-    .addFloatOption((option) =>
+    .addNumberOption((option) =>
       option
         .setName("weight")
         .setDescription("The weight being submitted.")
@@ -107,7 +107,7 @@ module.exports = {
         .setRequired(true)
         .addChoices(...genderDivisions),
     )
-    .addFloatOption((option) =>
+    .addNumberOption((option) =>
       option
         .setName("userweight")
         .setDescription("The user weight being submitted")
@@ -136,10 +136,10 @@ module.exports = {
     }
 
     // Store values from options
-    const weight = interaction.options.getFloat("weight");
+    const weight = interaction.options.getNumber("weight");
     const exercise = interaction.options.getString("exercise");
     const gender = interaction.options.getString("gender");
-    const userWeight = interaction.options.getFloat("userweight");
+    const userWeight = interaction.options.getNumber("userweight");
 
     const weightDivision = getWeightDivision(userWeight, gender);
 

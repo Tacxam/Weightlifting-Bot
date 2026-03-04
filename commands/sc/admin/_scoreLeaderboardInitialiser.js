@@ -1,6 +1,5 @@
 const {
   SlashCommandSubcommandBuilder,
-  PermissionFlagsBits,
   ChannelType,
 } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
@@ -11,7 +10,6 @@ module.exports = {
   data: new SlashCommandSubcommandBuilder()
     .setName("leaderboard")
     .setDescription("Initialise a leaderboard of submitted scores.")
-    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addChannelOption((option) =>
       option
         .setName("channel")
@@ -22,13 +20,19 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise being leaderboarded."))
+        .setDescription("The exercise being leaderboarded.")
         .setRequired(true)
         .addChoices(...exerciseChoices),
-
+    ),
+    
   async execute(interaction) {
     const channel = interaction.options.getChannel("channel");
     const exercise = interaction.options.getString("exercise");
+
+    const msg = await channel.send({
+      content: `**${exercise} Leaderboard (Top 10)**\n`
+    })
+    
     // ...functionality
   },
 };

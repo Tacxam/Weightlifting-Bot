@@ -19,7 +19,7 @@ for (const file of subcommandFiles) {
 
 // Create the builder data
 const builder = new SlashCommandBuilder()
-  .setName("la")
+  .setName("admin")
   .setDescription("...")
   .setDefaultMemberPermissions(PermissionFlagsBits.Administrator);
 

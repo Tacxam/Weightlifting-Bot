@@ -5,7 +5,7 @@ const {
   ButtonStyle,
   MessageFlags,
   ComponentType,
-  PermissionFlagsBits
+  PermissionFlagsBits,
 } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
 const {
@@ -13,7 +13,7 @@ const {
   getPending,
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
-const memberRole = require("../../../utils/roles.js")
+const memberRole = require("../../../utils/roles.js");
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -43,7 +43,9 @@ async function buttonHandler(interaction) {
     // Submit score to relevant leaderboard
     const redisField = `${pending.exercise}`;
 
-    await redis.zAdd(`${pending.exercise}`, [{value: interaction.user.id, score: pending.weight}]);
+    await redis.zAdd(`${pending.exercise}`, [
+      { value: interaction.user.id, score: pending.weight },
+    ]);
 
     // Update user profile hash
     await redis.hSet(`user:${interaction.user.id}:lifts`, {
@@ -53,7 +55,7 @@ async function buttonHandler(interaction) {
         dateAdded: pending.createdAt,
       }),
     });
-    
+
     deletePending(interaction.user.id);
   }
 
@@ -77,11 +79,11 @@ async function buttonHandler(interaction) {
 
 // Add score to leaderboard (Delete any previous score)
 module.exports = {
-  name: "addscore",
+  name: "add",
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
     .setDescription("Add a PR. If PR already exists, overwrites old PR.")
-    .addFloatOption((option) =>
+    .addNumberOption((option) =>
       option
         .setName("weight")
         .setDescription("The weight being submitted.")
@@ -105,17 +107,19 @@ module.exports = {
     }
 
     const hasMember = interaction.member.roles.cache.has(memberRole);
-    const isAdmin = interaction.member.permissions.has(PermissionFlagsBits.Administrator);
+    const isAdmin = interaction.member.permissions.has(
+      PermissionFlagsBits.Administrator,
+    );
 
     if (!hasMember && !isAdmin) {
       return interaction.reply({
         content: "Missing member role",
         flags: MessageFlags.Ephemeral,
-      })
+      });
     }
 
     // Store values from options
-    const weight = interaction.options.getFloat("weight");
+    const weight = interaction.options.getNumber("weight");
     const exercise = interaction.options.getString("exercise");
 
     // Add entry to the pending object

@@ -5,7 +5,7 @@ const {
   ButtonStyle,
   MessageFlags,
   ComponentType,
-  PermissionFlagsBits
+  PermissionFlagsBits,
 } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
 const {
@@ -13,7 +13,7 @@ const {
   getPending,
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
-const memberRole = require("../../../utils/roles.js")
+const memberRole = require("../../../utils/roles.js");
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -66,8 +66,7 @@ async function buttonHandler(interaction) {
     await interaction.channel.send({
       content: `${interaction.user} removed their PR for **${pending.exercise}** (**${score}kg**).`,
     });
-  }
-  else if (confirmed && removals === 0) {
+  } else if (confirmed && removals === 0) {
     await interaction.followUp({
       content: "No PR found, nothing was removed.",
       flags: MessageFlags.Ephemeral,
@@ -82,7 +81,7 @@ async function buttonHandler(interaction) {
 
 // Delete score from leaderboard
 module.exports = {
-  name: "removescore",
+  name: "remove",
   data: new SlashCommandSubcommandBuilder()
     .setName("remove")
     .setDescription("Remove a score.")
@@ -103,13 +102,15 @@ module.exports = {
     }
 
     const hasMember = interaction.member.roles.cache.has(memberRole);
-    const isAdmin = interaction.member.permissions.has(PermissionFlagsBits.Administrator);
+    const isAdmin = interaction.member.permissions.has(
+      PermissionFlagsBits.Administrator,
+    );
 
     if (!hasMember && !isAdmin) {
       return interaction.reply({
         content: "Missing member role",
         flags: MessageFlags.Ephemeral,
-      })
+      });
     }
 
     const exercise = interaction.options.getString("exercise");
