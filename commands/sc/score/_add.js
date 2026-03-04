@@ -81,7 +81,7 @@ module.exports = {
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
     .setDescription("Add a PR. If PR already exists, overwrites old PR.")
-    .addIntegerOption((option) =>
+    .addFloatOption((option) =>
       option
         .setName("weight")
         .setDescription("The weight being submitted.")
@@ -115,7 +115,7 @@ module.exports = {
     }
 
     // Store values from options
-    const weight = interaction.options.getInteger("weight");
+    const weight = interaction.options.getFloat("weight");
     const exercise = interaction.options.getString("exercise");
 
     // Add entry to the pending object

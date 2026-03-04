@@ -27,7 +27,8 @@ module.exports = {
         .addChoices(...exerciseChoices),
 
   async execute(interaction) {
-    const exercise = interaction.options.addStringOption("exercise");
+    const channel = interaction.options.getChannel("channel");
+    const exercise = interaction.options.getString("exercise");
     // ...functionality
   },
 };

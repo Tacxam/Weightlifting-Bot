@@ -87,7 +87,7 @@ module.exports = {
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
     .setDescription("Add a PR. If PR already exists, overwrites old PR.")
-    .addIntegerOption((option) =>
+    .addFloatOption((option) =>
       option
         .setName("weight")
         .setDescription("The weight being submitted.")
@@ -107,7 +107,7 @@ module.exports = {
         .setRequired(true)
         .addChoices(...genderDivisions),
     )
-    .addIntegerOption((option) =>
+    .addFloatOption((option) =>
       option
         .setName("userweight")
         .setDescription("The user weight being submitted")
@@ -136,10 +136,10 @@ module.exports = {
     }
 
     // Store values from options
-    const weight = interaction.options.getInteger("weight");
+    const weight = interaction.options.getFloat("weight");
     const exercise = interaction.options.getString("exercise");
     const gender = interaction.options.getString("gender");
-    const userWeight = interaction.options.getInteger("userweight");
+    const userWeight = interaction.options.getFloat("userweight");
 
     const weightDivision = getWeightDivision(userWeight, gender);
 
