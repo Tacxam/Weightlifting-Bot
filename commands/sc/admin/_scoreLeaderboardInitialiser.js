@@ -1,6 +1,7 @@
 const {
   SlashCommandSubcommandBuilder,
   ChannelType,
+  MessageFlags,
 } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
 
@@ -30,9 +31,18 @@ module.exports = {
     const exercise = interaction.options.getString("exercise");
 
     const msg = await channel.send({
-      content: `**${exercise} Leaderboard (Top 10)**\n`
+      content: `**${exercise} Leaderboard (Top 10):**\n`
     })
     
-    // ...functionality
+    // Set pointer to channel and message
+    const { redis } = interaction.client;
+
+    await redis.set(`lbchannel:${exercise}`, channel.id);
+    await redis.set(`lbmsg:${exercise}`, msg.id);
+
+    return interaction.reply({
+      content: `Leaderboard created in ${channel} for **${exercise}**.`,
+      flags: MessageFlags.Ephemeral,
+    })
   },
 };
