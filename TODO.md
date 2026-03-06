@@ -8,7 +8,7 @@ node index.js
 [ ] Normalise command names, i.e la, lpl, ls and l for normal commands to make it easier to tell what is a bot command
 
 # Functionality
-## Admin
+## Admin (Deadass need to do heaps with this, but this will come last)
 **removeUserScores** This removes all scores from a user
 [ ] Create this tool
 
