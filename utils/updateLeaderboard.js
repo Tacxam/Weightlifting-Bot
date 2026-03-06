@@ -4,9 +4,8 @@ async function updateLeaderboardMessage(client, redis, exercise) {
 
 	if (!channelId || !msgId) return;
 
-  const top = await redis.zRange(exercise, 0, 9, {
+  const top = await redis.zRangeWithScores(exercise, 0, 9, {
 		REV: true,
-		WITHSCORES: true,
 	});
 
   let content = `**${exercise} Leaderboard (Top 10):**\n`;
