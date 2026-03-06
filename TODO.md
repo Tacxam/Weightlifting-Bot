@@ -38,3 +38,4 @@ node index.js
 
 ## Utility
 [ ] Configure scoreLeaderboardInitialiser
+[ ] Automatically assign memberships?
