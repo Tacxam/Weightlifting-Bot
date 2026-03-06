@@ -14,6 +14,7 @@ const {
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
 const memberRole = require("../../../utils/roles.js");
+const { updateLeaderboardMessage } = require("../../../utils/updateLeaderboard.js")
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -55,6 +56,8 @@ async function buttonHandler(interaction) {
         dateAdded: pending.createdAt,
       }),
     });
+
+    updateLeaderboardMessage(interaction.client, redis, pending.exercise);
 
     deletePending(interaction.user.id);
   }
