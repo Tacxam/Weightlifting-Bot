@@ -4,6 +4,7 @@ const {
   MessageFlags,
 } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
+const { updateLeaderboardMessage } = require("../../../utils/updateLeaderboard.js")
 
 // Displays Leaderboard
 module.exports = {
@@ -39,6 +40,8 @@ module.exports = {
 
     await redis.set(`lbchannel:${exercise}`, channel.id);
     await redis.set(`lbmsg:${exercise}`, msg.id);
+
+    updateLeaderboardMessage(interaction.client, redis, exercise);
 
     return interaction.reply({
       content: `Leaderboard created in ${channel} for **${exercise}**.`,

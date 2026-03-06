@@ -2,20 +2,27 @@ async function updateLeaderboardMessage(client, redis, exercise) {
   const channelId = await redis.get(`lbchannel:${exercise}`);
   const msgId = await redis.get(`lbmsg:${exercise}`);
 
-  const top = await redis.zRevRangeWithScores(exercise, 0, 9);
+	if (!channelId || !msgId) return;
 
-  let content = `**${exercise} Leaderboard (Top 10):**`;
+  const top = await redis.zRange(exercise, 0, 9, {
+		REV: true,
+		WITHSCORES: true,
+	});
+
+  let content = `**${exercise} Leaderboard (Top 10):**\n`;
   if (!top.length) {
-    content = "No content yet";
+    content += "No content yet";
   }
 
   // Map each array user and score to a string
-  content += top
-    .map(
-      (element, index) =>
-        `${index + 1}. <@${element.value} - **${element.score}**`,
-    )
-    .join("\n");
+  else {
+    content += top
+      .map(
+        (element, index) =>
+          `${index + 1}. <@${element.value}> - **${element.score}**`,
+      )
+      .join("\n");
+  }
 
   // Find channel
   const channel = await client.channels.fetch(channelId);
