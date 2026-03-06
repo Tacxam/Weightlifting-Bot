@@ -13,13 +13,17 @@ node index.js
 [ ] Create this tool
 
 ## Score
+[ ] Female leaderboard variation
+
 **add**
 [X] Set permissions to only members or admin
 [X] Reconfigure to handle hashing
+[ ] Update for leaderboard
 
 **remove**
 [X] Set permissions to only members or admin
 [X] Reconfigure to handle hashing
+[ ] Update for leaderboard
 
 **user**
 [X] Configure to handle hashing
@@ -28,14 +32,16 @@ node index.js
 **add**
 [X] Set permissions to only members or admin
 [X] Set up database integration
+[ ] Update for leaderboard
 
 **remove**
 [X] Set permissions to only members or admin
 [X] Set up database integration
+[ ] Update for leaderboard
 
 **user**
 [X] Configure to handle hashing
 
 ## Utility
-[ ] Configure scoreLeaderboardInitialiser
+[X] Configure scoreLeaderboardInitialiser
 [ ] Automatically assign memberships?

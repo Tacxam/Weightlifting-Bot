@@ -10,7 +10,7 @@ async function updateLeaderboardMessage(client, redis, exercise) {
 
   let content = `**${exercise} Leaderboard (Top 10):**\n`;
   if (!top.length) {
-    content += "No content yet";
+    content += "No scores yet";
   }
 
   // Map each array user and score to a string
