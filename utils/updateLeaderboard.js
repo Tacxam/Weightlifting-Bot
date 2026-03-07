@@ -33,7 +33,7 @@ async function updateLeaderboardMessage(client, redis, exercise) {
 
 async function updateLeaderboardPL(redis, exercise, gender, weightDivision) {
   const top = await redis.zRangeWithScores(
-    `${exercise}:${gender}:${weightDivision}`,
+    `${gender}:${weightDivision}:${exercise}`,
     0,
     9,
     {
