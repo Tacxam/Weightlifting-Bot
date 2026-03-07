@@ -14,6 +14,7 @@ const {
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
 const memberRole = require("../../../utils/roles.js");
+const { updateLeaderboardMessage } = require("../../../utils/updateLeaderboard.js")
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -52,6 +53,8 @@ async function buttonHandler(interaction) {
 
     // Update user profile hash
     await redis.hDel(`user:${interaction.user.id}:lifts`, redisField);
+
+    updateLeaderboardMessage(interaction.client, redis, pending.exercise);
 
     deletePending(interaction.user.id);
   }
