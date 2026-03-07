@@ -35,6 +35,8 @@ module.exports = {
     const gender = interaction.options.getString("gender");
     const weightclass = interaction.options.getNumber("weightclass");
 
-    
+    const weightDivision = getWeightDivision(userWeight, gender);
+
+    let content = `**${exercise}:${gender}:${weightDivision}kg Leaderboard (Top 10):**\n`
   },
 };

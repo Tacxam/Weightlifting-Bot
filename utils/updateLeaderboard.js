@@ -31,8 +31,14 @@ async function updateLeaderboardMessage(client, redis, exercise) {
   await msg.edit({ content });
 }
 
-async function updateLeaderboardPL(redis, exercise) {
+async function updateLeaderboardPL(redis, exercise, gender, weightDivision) {
+	const top = await redis.zRangeWithScores(`${exercise}:${gender}:${weightDivision}`, 0, 9, {
+		REV: true,
+	});
 
+	let content = `**${exercise}:${gender}:${weightDivision}kg Leaderboard (Top 10):**\n`;
+
+	
 }
 
 module.exports = { updateLeaderboardMessage };
