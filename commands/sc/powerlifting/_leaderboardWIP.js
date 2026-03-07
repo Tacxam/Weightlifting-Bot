@@ -26,7 +26,7 @@ module.exports = {
     )
     .addNumberOption((option) =>
       option
-        .setName("weightclass")
+        .setName("weight")
         .setDescription("The division weight class")
         .setRequired(true),
     ),
@@ -34,12 +34,21 @@ module.exports = {
   async execute(interaction) {
     const exercise = interaction.options.getString("exercise");
     const gender = interaction.options.getString("gender");
-    const weightclass = interaction.options.getNumber("weightclass");
+    const userWeight = interaction.options.getNumber("weight");
 
     const weightDivision = getWeightDivision(userWeight, gender);
 
-    let content = `**${exercise}:${gender}:${weightDivision}kg Leaderboard (Top 10):**\n`;
+    const { redis } = interaction.client;
 
+    const content = updateLeaderboardPL(
+      redis,
+      exercise,
+      gender,
+      weightDivision,
+    );
 
+    await interaction.reply({
+      content: content,
+    });
   },
 };
