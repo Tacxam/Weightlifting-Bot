@@ -2,6 +2,7 @@ const { SlashCommandSubcommandBuilder } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
 const { getWeightDivision } = require("../../../utils/weightDivisions.js");
+const { updateLeaderboardPL } = require("../../../utils/updateLeaderboard.js");
 
 // Displays Leaderboard
 module.exports = {
@@ -39,6 +40,6 @@ module.exports = {
 
     let content = `**${exercise}:${gender}:${weightDivision}kg Leaderboard (Top 10):**\n`;
 
-    
+
   },
 };

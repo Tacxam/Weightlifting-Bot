@@ -55,4 +55,4 @@ async function updateLeaderboardPL(client, redis, exercise, gender, weightDivisi
 	return content;
 }
 
-module.exports = { updateLeaderboardMessage };
+module.exports = { updateLeaderboardMessage, updateLeaderboardPL };
