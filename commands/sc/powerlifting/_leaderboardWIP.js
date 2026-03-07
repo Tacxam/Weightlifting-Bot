@@ -37,6 +37,8 @@ module.exports = {
 
     const weightDivision = getWeightDivision(userWeight, gender);
 
-    let content = `**${exercise}:${gender}:${weightDivision}kg Leaderboard (Top 10):**\n`
+    let content = `**${exercise}:${gender}:${weightDivision}kg Leaderboard (Top 10):**\n`;
+
+    
   },
 };

@@ -2,11 +2,11 @@ async function updateLeaderboardMessage(client, redis, exercise) {
   const channelId = await redis.get(`lbchannel:${exercise}`);
   const msgId = await redis.get(`lbmsg:${exercise}`);
 
-	if (!channelId || !msgId) return;
+  if (!channelId || !msgId) return;
 
   const top = await redis.zRangeWithScores(exercise, 0, 9, {
-		REV: true,
-	});
+    REV: true,
+  });
 
   let content = `**${exercise} Leaderboard (Top 10):**\n`;
   if (!top.length) {
@@ -31,14 +31,28 @@ async function updateLeaderboardMessage(client, redis, exercise) {
   await msg.edit({ content });
 }
 
-async function updateLeaderboardPL(redis, exercise, gender, weightDivision) {
-	const top = await redis.zRangeWithScores(`${exercise}:${gender}:${weightDivision}`, 0, 9, {
-		REV: true,
-	});
+async function updateLeaderboardPL(client, redis, exercise, gender, weightDivision) {
+  const top = await redis.zRangeWithScores(
+    `${exercise}:${gender}:${weightDivision}`,
+    0,
+    9,
+    {
+      REV: true,
+    },
+  );
 
-	let content = `**${exercise}:${gender}:${weightDivision}kg Leaderboard (Top 10):**\n`;
+  let content = `**${exercise}:${gender}:${weightDivision}kg Leaderboard (Top 10):**\n`;
+  if (!top.length) {
+    content += "No scores yet";
+  } else {
+    content += top.map(
+      (element, index) =>
+        `${index + 1}. <@${element.value}> - **${element.score}**`,
+    )
+		.join("\n");
+  }
 
-	
+	return content;
 }
 
 module.exports = { updateLeaderboardMessage };
