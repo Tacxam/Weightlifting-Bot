@@ -31,4 +31,8 @@ async function updateLeaderboardMessage(client, redis, exercise) {
   await msg.edit({ content });
 }
 
+async function updateLeaderboardPL(redis, exercise) {
+
+}
+
 module.exports = { updateLeaderboardMessage };

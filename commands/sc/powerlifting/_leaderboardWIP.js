@@ -23,7 +23,7 @@ module.exports = {
         .setRequired(true)
         .addChoices(...genderDivisions),
     )
-    .addStringOption((option) =>
+    .addNumberOption((option) =>
       option
         .setName("weightclass")
         .setDescription("The division weight class")
@@ -31,7 +31,10 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    const exercise = interaction.options.addStringOption("exercise");
-    // ...functionality
+    const exercise = interaction.options.getString("exercise");
+    const gender = interaction.options.getString("gender");
+    const weightclass = interaction.options.getNumber("weightclass");
+
+    
   },
 };
