@@ -5,7 +5,7 @@ When running bot:
 node index.js
 
 # Utility
-[ ] Normalise command names, i.e la, lpl, ls and l for normal commands to make it easier to tell what is a bot command
+[X] Normalise command names, i.e la, lpl, ls and l for normal commands to make it easier to tell what is a bot command
 
 # Functionality
 ## Admin (Deadass need to do heaps with this, but this will come last)
@@ -18,12 +18,12 @@ node index.js
 **add**
 [X] Set permissions to only members or admin
 [X] Reconfigure to handle hashing
-[ ] Update for leaderboard
+[X] Update for leaderboard
 
 **remove**
 [X] Set permissions to only members or admin
 [X] Reconfigure to handle hashing
-[ ] Update for leaderboard
+[X] Update for leaderboard
 
 **user**
 [X] Configure to handle hashing
@@ -32,12 +32,12 @@ node index.js
 **add**
 [X] Set permissions to only members or admin
 [X] Set up database integration
-[ ] Update for leaderboard
+[X] Update for leaderboard (No need)
 
 **remove**
 [X] Set permissions to only members or admin
 [X] Set up database integration
-[ ] Update for leaderboard
+[X] Update for leaderboard (No need)
 
 **user**
 [X] Configure to handle hashing
