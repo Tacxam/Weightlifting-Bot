@@ -35,6 +35,8 @@ node index.js
 
 ## Powerlifting
 [ ] Moderation of extreme or impossible scores
+- [X] Negative handling
+- [X] Extreme score handling
 [ ] DOTS leaderboard
 
 **add**
