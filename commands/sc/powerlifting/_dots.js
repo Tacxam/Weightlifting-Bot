@@ -2,6 +2,7 @@ const { SlashCommandSubcommandBuilder } = require("discord.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
 const dotsCoefficients = require("../../../utils/dotsCoefficients.js");
 
+// Calculate user dots
 module.exports = {
   name: "dots",
   data: new SlashCommandSubcommandBuilder()

@@ -7,6 +7,7 @@ node index.js
 # Utility
 [X] Normalise command names, i.e la, lpl, ls and l for normal commands to make it easier to tell what is a bot command
 [ ] Remove the notifications for leaderboards and anything that mentions users
+- [X] Leaderboards
 
 # Functionality
 ## Admin (Deadass need to do heaps with this, but this will come last)

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 
-// Displays Leaderboard
+// One-rep max calculator
 module.exports = {
   name: "orm",
   data: new SlashCommandBuilder()

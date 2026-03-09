@@ -6,7 +6,7 @@ const {
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
 const { updateLeaderboardMessage } = require("../../../utils/updateLeaderboard.js")
 
-// Displays Leaderboard
+// Initialises a /score leaderboard to specific channel
 module.exports = {
   name: "leaderboard",
   data: new SlashCommandSubcommandBuilder()
