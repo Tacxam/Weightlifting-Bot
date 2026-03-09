@@ -1,18 +1,8 @@
 const {
   SlashCommandSubcommandBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  MessageFlags,
-  ComponentType,
 } = require("discord.js");
-const exerciseChoices = require("../../../utils/exerciseChoices.js");
-const {
-  setPending,
-  getPending,
-  deletePending,
-} = require("../../../utils/pendingSubmission.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
+const dotsCoefficients = require("../../../utils/dotsCoefficients.js")
 
 module.exports = {
   name: "dots",
@@ -60,6 +50,6 @@ module.exports = {
 
     const total = bench + squat + deadlift;
 
-    
+
   },
 };
