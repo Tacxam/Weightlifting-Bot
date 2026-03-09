@@ -55,3 +55,4 @@ node index.js
 [ ] Automatically assign memberships?
 [ ] Create optimal protein (1.6 - 2.2g/kg)
 [ ] Create lb/kg conversion
+[ ] Create HR zones estimator
