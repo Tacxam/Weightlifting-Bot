@@ -1,10 +1,10 @@
-const { SlashCommandSubcommandBuilder } = require("discord.js");
-const exerciseChoices = require("../../../utils/exerciseChoices.js");
+const { SlashCommandBuilder } = require("discord.js");
+const exerciseChoices = require("../../utils/exerciseChoices.js");
 
 // Displays Leaderboard
 module.exports = {
   name: "orm",
-  data: new SlashCommandSubcommandBuilder()
+  data: new SlashCommandBuilder()
     .setName("orm")
     .setDescription(
       "Estimate one-rep max with the Epley Formula (Inaccurate above 10 reps)",
