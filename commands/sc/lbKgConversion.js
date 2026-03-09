@@ -29,13 +29,13 @@ module.exports = {
 
 
 		if (lbkg === "lb") {
-			const newWeight = weight * lbkgRatio.ratio;
+			const newWeight = (weight * lbkgRatio.ratio).toFixed(2);
 			return interaction.reply({
 				content: `${weight}kg is equal to ${newWeight}lb`
 			});
 		}
 		else {
-			const newWeight = weight / lbkgRatio.ratio;
+			const newWeight = (weight / lbkgRatio.ratio).toFixed(2);
 			return interaction.reply({
 				content: `${weight}lb is equal to ${newWeight}kg`
 			});
