@@ -30,6 +30,8 @@ node index.js
 [X] Configure to handle hashing
 
 ## Powerlifting
+[ ] DOTS leaderboard
+
 **add**
 [X] Set permissions to only members or admin
 [X] Set up database integration

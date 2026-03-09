@@ -1,8 +1,6 @@
-const {
-  SlashCommandSubcommandBuilder,
-} = require("discord.js");
+const { SlashCommandSubcommandBuilder } = require("discord.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
-const dotsCoefficients = require("../../../utils/dotsCoefficients.js")
+const dotsCoefficients = require("../../../utils/dotsCoefficients.js");
 
 module.exports = {
   name: "dots",
@@ -18,7 +16,7 @@ module.exports = {
     )
     .addNumberOption((option) =>
       option
-        .setName("userweight")
+        .setName("bodyweight")
         .setDescription("The user's bodyweight")
         .setRequired(true),
     )
@@ -42,14 +40,28 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    const gender = interaction.options.getString("gender")
-    const userWeight = interaction.options.getNumber("userweight");
+    const gender = interaction.options.getString("gender");
+    const bodyWeight = interaction.options.getNumber("bodyweight");
     const bench = interaction.options.getNumber("bench");
     const squat = interaction.options.getNumber("squat");
     const deadlift = interaction.options.getNumber("deadlift");
 
     const total = bench + squat + deadlift;
 
+    // Dynamic lookup (dots[gender])
+    const { a, b, c, d, e } = dotsCoefficients[gender];
 
+    const denominator =
+      a +
+      b * bodyWeight +
+      c * bodyWeight ** 2 +
+      d * bodyWeight ** 3 +
+      e * bodyWeight ** 4;
+
+    dots = ((500 * total) / (denominator)).toFixed(2);
+
+    await interaction.reply({
+      content: `**DOTS = ${dots}**\nBW: ${bodyWeight}kg, TOTAL: ${total}kg (B: ${bench}kg, S: ${squat}kg, D: ${deadlift}kg)`
+    });
   },
 };

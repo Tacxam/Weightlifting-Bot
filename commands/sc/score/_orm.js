@@ -29,7 +29,7 @@ module.exports = {
     const orm = Math.round(weight * (1 + reps / 30));
 
     await interaction.reply({
-      content: `The one-rep max for ${reps} reps at ${weight}kg is extimated to be **${orm}kg**.`,
+      content: `The one-rep max for ${reps} reps at ${weight}kg is estimated to be **${orm}kg**.`,
     });
   },
 };
