@@ -14,6 +14,7 @@ node index.js
 [ ] Create this tool
 
 ## Score
+[ ] Moderation of extreme or impossible scores
 [ ] Female leaderboard variation
 
 **add**
@@ -30,6 +31,7 @@ node index.js
 [X] Configure to handle hashing
 
 ## Powerlifting
+[ ] Moderation of extreme or impossible scores
 [ ] DOTS leaderboard
 
 **add**

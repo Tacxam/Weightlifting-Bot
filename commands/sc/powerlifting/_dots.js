@@ -61,7 +61,7 @@ module.exports = {
     dots = ((500 * total) / (denominator)).toFixed(2);
 
     await interaction.reply({
-      content: `**DOTS = ${dots}**\nBW: ${bodyWeight}kg, TOTAL: ${total}kg (B: ${bench}kg, S: ${squat}kg, D: ${deadlift}kg)`
+      content: `**DOTS = ${dots}**\nBW: ${bodyWeight}kg, TOTAL: ${total}kg (B: ${bench}kg, S: ${squat}kg, D: ${deadlift}kg)`,
     });
   },
 };
