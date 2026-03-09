@@ -16,6 +16,7 @@ const {
 const memberRole = require("../../../utils/roles.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
 const { getWeightDivision } = require("../../../utils/weightDivisions.js");
+const records = require("../../../utils/worldRecords.js");
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -142,13 +143,24 @@ module.exports = {
       return interaction.reply({
         content: "Cannot submit a negative weight",
         flags: MessageFlags.Ephemeral,
-      })
+      });
     }
 
     const exercise = interaction.options.getString("exercise");
+
+    const record = records[exercise];
+
+    // Checks to see if record exists and if it does, checks to see if weight exceeds record
+    if (record && weight >= record) {
+      return interaction.reply({
+        content: `Lift exceeds current world record for ${exercise}`,
+        flags: MessageFlags.Ephemeral,
+      });
+    }
+
     const gender = interaction.options.getString("gender");
     const userWeight = interaction.options.getNumber("userweight");
-    
+
     const weightDivision = getWeightDivision(userWeight, gender);
 
     // Add entry to the pending object
