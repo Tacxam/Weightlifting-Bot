@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("discord.js");
-const exerciseChoices = require("../../utils/exerciseChoices.js");
 
 // Displays Leaderboard
 module.exports = {

@@ -137,10 +137,18 @@ module.exports = {
 
     // Store values from options
     const weight = interaction.options.getNumber("weight");
+
+    if (weight <= 0) {
+      return interaction.reply({
+        content: "Cannot submit a negative weight",
+        flags: MessageFlags.Ephemeral,
+      })
+    }
+
     const exercise = interaction.options.getString("exercise");
     const gender = interaction.options.getString("gender");
     const userWeight = interaction.options.getNumber("userweight");
-
+    
     const weightDivision = getWeightDivision(userWeight, gender);
 
     // Add entry to the pending object
