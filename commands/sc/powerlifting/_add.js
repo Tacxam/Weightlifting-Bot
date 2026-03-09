@@ -153,7 +153,7 @@ module.exports = {
     // Checks to see if record exists and if it does, checks to see if weight exceeds record
     if (record && weight >= record) {
       return interaction.reply({
-        content: `Lift exceeds current world record for ${exercise}`,
+        content: `Lift exceeds current raw world record for ${exercise} (${record}kg)`,
         flags: MessageFlags.Ephemeral,
       });
     }
