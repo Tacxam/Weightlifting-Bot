@@ -15,7 +15,9 @@ node index.js
 
 ## Score
 [ ] Moderation of extreme or impossible scores
-[ ] Female leaderboard variation
+- [ ] Negative handling
+- [ ] Extreme score handling
+[ ] Female leaderboard variation (Not sure if this is feasible)
 
 **add**
 [X] Set permissions to only members or admin
@@ -50,3 +52,5 @@ node index.js
 ## Utility
 [X] Configure scoreLeaderboardInitialiser
 [ ] Automatically assign memberships?
+[ ] Create optimal protein (1.6 - 2.2g/kg)
+[ ] Create lb/kg conversion
