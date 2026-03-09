@@ -6,7 +6,9 @@ module.exports = {
   name: "orm",
   data: new SlashCommandSubcommandBuilder()
     .setName("orm")
-    .setDescription("Estimate one-rep max with the Epley Formula (Inaccurate above 10 reps)")
+    .setDescription(
+      "Estimate one-rep max with the Epley Formula (Inaccurate above 10 reps)",
+    )
     .addNumberOption((option) =>
       option
         .setName("weight")
@@ -22,12 +24,12 @@ module.exports = {
 
   async execute(interaction) {
     const weight = interaction.options.getNumber("weight");
-		const reps = interaction.options.getInteger("reps");
+    const reps = interaction.options.getInteger("reps");
 
-    const orm = Math.round(weight * (1 + reps/30));
+    const orm = Math.round(weight * (1 + reps / 30));
 
     await interaction.reply({
       content: `The one-rep max for ${reps} reps at ${weight}kg is extimated to be **${orm}kg**.`,
-    })
-	},
+    });
+  },
 };

@@ -17,5 +17,5 @@ module.exports = {
 	name: "dots",
 	data: new SlashCommandSubcommandBuilder()
 	.setName("dots")
-	.setDescription("Calculate your DOTS score")
+	.setDescription("Calculate DOTS score")
 }

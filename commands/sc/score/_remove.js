@@ -14,7 +14,9 @@ const {
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
 const memberRole = require("../../../utils/roles.js");
-const { updateLeaderboardMessage } = require("../../../utils/updateLeaderboard.js")
+const {
+  updateLeaderboardMessage,
+} = require("../../../utils/updateLeaderboard.js");
 
 // Button handling
 async function buttonHandler(interaction) {
