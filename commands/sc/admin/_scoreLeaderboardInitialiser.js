@@ -46,6 +46,7 @@ module.exports = {
     return interaction.reply({
       content: `Leaderboard created in ${channel} for **${exercise}**.`,
       flags: MessageFlags.Ephemeral,
+      allowedMentions: { users: [] },
     })
   },
 };

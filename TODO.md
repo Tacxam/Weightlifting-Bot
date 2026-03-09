@@ -15,8 +15,8 @@ node index.js
 
 ## Score
 [ ] Moderation of extreme or impossible scores
-- [ ] Negative handling
-- [ ] Extreme score handling
+- [X] Negative handling
+- [X] Extreme score handling
 [ ] Female leaderboard variation (Not sure if this is feasible)
 
 **add**
