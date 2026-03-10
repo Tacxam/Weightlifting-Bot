@@ -147,13 +147,6 @@ module.exports = {
       });
     }
 
-    if (weight <= 0) {
-      return interaction.reply({
-        content: "Cannot submit a negative weight",
-        flags: MessageFlags.Ephemeral,
-      });
-    }
-
     const bench = interaction.options.getNumber("bench");
     const squat = interaction.options.getNumber("squat");
     const deadlift = interaction.options.getNumber("deadlift");
@@ -164,11 +157,20 @@ module.exports = {
       Deadlift: deadlift,
     }
 
-    // Checks to see if record exists and if it does, checks to see if weight exceeds record
+    // Lift validation handling
     for (const exercise in lifts) {
       const weight = lifts[exercise];
       const record = records[exercise];
 
+      // Negative weight
+      if (weight <= 0) {
+        return interaction.reply({
+          content: "Cannot submit a negative weight",
+          flags: MessageFlags.Ephemeral,
+        });
+      }
+
+      // Weight exceeds records
       if (record && weight >= record) {
         return interaction.reply({
           content: `Lift exceeds current raw world record for ${exercise} (${record}kg)`,
