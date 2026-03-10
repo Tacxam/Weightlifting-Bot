@@ -1,5 +1,6 @@
 const { SlashCommandSubcommandBuilder } = require("discord.js");
 
+// Reloads commands
 module.exports = {
   data: new SlashCommandSubcommandBuilder()
     .setName("reload")
