@@ -41,7 +41,7 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
-    const dots = dotsCalculator
+    const dots = dotsCalculator(pending.total, pending.gender, pending.weightDivision);
 
     // Database handling
     const { redis } = interaction.client;
@@ -90,7 +90,7 @@ module.exports = {
   name: "add",
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
-    .setDescription("Add a PR. If PR already exists, overwrites old PR.")
+    .setDescription("Add powerlifting PRs.")
     .addNumberOption((option) =>
       option
         .setName("bench")
