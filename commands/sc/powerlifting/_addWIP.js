@@ -41,6 +41,8 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
+    const dots = dotsCalculator
+
     // Database handling
     const { redis } = interaction.client;
 
@@ -91,25 +93,19 @@ module.exports = {
     .setDescription("Add a PR. If PR already exists, overwrites old PR.")
     .addNumberOption((option) =>
       option
-        .setName("weight")
-        .setDescription("The weight being submitted.")
-        .setRequired(true),
-    )
-    .addStringOption((option) =>
-      option
         .setName("bench")
         .setDescription("The exercise being submitted.")
         .setRequired(true)
         .addChoices(...exerciseChoices),
     )
-    .addStringOption((option) =>
+    .addNumberOption((option) =>
       option
         .setName("squat")
         .setDescription("The exercise being submitted.")
         .setRequired(true)
         .addChoices(...exerciseChoices),
     )
-    .addStringOption((option) =>
+    .addNumberOption((option) =>
       option
         .setName("deadlift")
         .setDescription("The exercise being submitted.")
@@ -151,9 +147,6 @@ module.exports = {
       });
     }
 
-    // Store values from options
-    const weight = interaction.options.getNumber("weight");
-
     if (weight <= 0) {
       return interaction.reply({
         content: "Cannot submit a negative weight",
@@ -161,9 +154,9 @@ module.exports = {
       });
     }
 
-    const bench = interaction.options.getString("bench");
-    const squat = interaction.options.getString("squat");
-    const deadlift = interaction.options.getString("deadlift");
+    const bench = interaction.options.getNumber("bench");
+    const squat = interaction.options.getNumber("squat");
+    const deadlift = interaction.options.getNumber("deadlift");
 
     const lifts = {
       Bench: bench,
@@ -191,7 +184,6 @@ module.exports = {
 
     // Add entry to the pending object
     setPending(interaction.user.id, {
-      weight,
       lifts,
       gender,
       weightDivision,
