@@ -1,6 +1,6 @@
 const { SlashCommandSubcommandBuilder } = require("discord.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
-const dotsCoefficients = require("../../../utils/dotsCoefficients.js");
+const { dotsCalculator } = require("../../../utils/dotsHandler.js");
 
 // Calculate user dots
 module.exports = {
@@ -49,17 +49,7 @@ module.exports = {
 
     const total = bench + squat + deadlift;
 
-    // Dynamic lookup (dots[gender])
-    const { a, b, c, d, e } = dotsCoefficients[gender];
-
-    const denominator =
-      a +
-      b * bodyWeight +
-      c * bodyWeight ** 2 +
-      d * bodyWeight ** 3 +
-      e * bodyWeight ** 4;
-
-    dots = ((500 * total) / (denominator)).toFixed(2);
+    const dots = dotsCalculator(total, gender, bodyWeight);
 
     await interaction.reply({
       content: `**DOTS = ${dots}**\nBW: ${bodyWeight}kg, TOTAL: ${total}kg (B: ${bench}kg, S: ${squat}kg, D: ${deadlift}kg)`,

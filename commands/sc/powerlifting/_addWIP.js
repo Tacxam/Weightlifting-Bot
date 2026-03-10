@@ -17,6 +17,7 @@ const memberRole = require("../../../utils/roles.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
 const { getWeightDivision } = require("../../../utils/weightDivisions.js");
 const records = require("../../../utils/worldRecords.js");
+const { dotsCalculator } = require("../../../utils/dotsHandler.js");
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -44,7 +45,7 @@ async function buttonHandler(interaction) {
     const { redis } = interaction.client;
 
     // Submit score to relevant leaderboard
-    const redisField = `${pending.gender}:${pending.weightDivision}:${pending.exercise}`;
+    const redisField = `powerlifting`;
 
     await redis.zAdd(redisField, [
       {
@@ -183,7 +184,6 @@ module.exports = {
       }      
     }
 
-
     const gender = interaction.options.getString("gender");
     const userWeight = interaction.options.getNumber("userweight");
 
@@ -192,7 +192,7 @@ module.exports = {
     // Add entry to the pending object
     setPending(interaction.user.id, {
       weight,
-      exercise,
+      lifts,
       gender,
       weightDivision,
     });

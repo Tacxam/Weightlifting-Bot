@@ -6,9 +6,9 @@ const { updateLeaderboardPL } = require("../../../utils/updateLeaderboard.js");
 
 // Displays Leaderboard
 module.exports = {
-  name: "leaderboard",
+  name: "plleaderboard",
   data: new SlashCommandSubcommandBuilder()
-    .setName("leaderboard")
+    .setName("plleaderboard")
     .setDescription("Display leaderboard of submitted scores")
     .addStringOption((option) =>
       option
