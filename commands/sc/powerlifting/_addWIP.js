@@ -41,7 +41,11 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
-    const dots = dotsCalculator(pending.total, pending.gender, pending.weightDivision);
+    const dots = dotsCalculator(
+      pending.total,
+      pending.gender,
+      pending.weightDivision,
+    );
 
     // Database handling
     const { redis } = interaction.client;
@@ -97,22 +101,19 @@ module.exports = {
       option
         .setName("bench")
         .setDescription("The exercise being submitted.")
-        .setRequired(true)
-        .addChoices(...exerciseChoices),
+        .setRequired(true),
     )
     .addNumberOption((option) =>
       option
         .setName("squat")
         .setDescription("The exercise being submitted.")
-        .setRequired(true)
-        .addChoices(...exerciseChoices),
+        .setRequired(true),
     )
     .addNumberOption((option) =>
       option
         .setName("deadlift")
         .setDescription("The exercise being submitted.")
-        .setRequired(true)
-        .addChoices(...exerciseChoices),
+        .setRequired(true),
     )
     .addStringOption((option) =>
       option
@@ -159,7 +160,7 @@ module.exports = {
       Bench: bench,
       Squat: squat,
       Deadlift: deadlift,
-    }
+    };
 
     // Lift validation handling
     for (const exercise in lifts) {
@@ -180,7 +181,7 @@ module.exports = {
           content: `Lift exceeds current raw world record for ${exercise} (${record}kg)`,
           flags: MessageFlags.Ephemeral,
         });
-      }      
+      }
     }
 
     const gender = interaction.options.getString("gender");
