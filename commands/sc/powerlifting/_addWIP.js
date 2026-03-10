@@ -96,7 +96,21 @@ module.exports = {
     )
     .addStringOption((option) =>
       option
-        .setName("exercise")
+        .setName("bench")
+        .setDescription("The exercise being submitted.")
+        .setRequired(true)
+        .addChoices(...exerciseChoices),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("squat")
+        .setDescription("The exercise being submitted.")
+        .setRequired(true)
+        .addChoices(...exerciseChoices),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("deadlift")
         .setDescription("The exercise being submitted.")
         .setRequired(true)
         .addChoices(...exerciseChoices),
@@ -146,17 +160,29 @@ module.exports = {
       });
     }
 
-    const exercise = interaction.options.getString("exercise");
+    const bench = interaction.options.getString("bench");
+    const squat = interaction.options.getString("squat");
+    const deadlift = interaction.options.getString("deadlift");
 
-    const record = records[exercise];
+    const lifts = {
+      Bench: bench,
+      Squat: squat,
+      Deadlift: deadlift,
+    }
 
     // Checks to see if record exists and if it does, checks to see if weight exceeds record
-    if (record && weight >= record) {
-      return interaction.reply({
-        content: `Lift exceeds current raw world record for ${exercise} (${record}kg)`,
-        flags: MessageFlags.Ephemeral,
-      });
+    for (const exercise in lifts) {
+      const weight = lifts[exercise];
+      const record = records[exercise];
+
+      if (record && weight >= record) {
+        return interaction.reply({
+          content: `Lift exceeds current raw world record for ${exercise} (${record}kg)`,
+          flags: MessageFlags.Ephemeral,
+        });
+      }      
     }
+
 
     const gender = interaction.options.getString("gender");
     const userWeight = interaction.options.getNumber("userweight");
