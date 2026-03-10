@@ -38,6 +38,7 @@ node index.js
 - [X] Negative handling
 - [X] Extreme score handling
 [ ] DOTS leaderboard
+[ ] DOTS percentile
 
 **add**
 [X] Set permissions to only members or admin
