@@ -52,14 +52,16 @@ async function buttonHandler(interaction) {
     await redis.zAdd(redisField, [
       {
         value: interaction.user.id,
-        score: pending.weight,
+        score: dots,
       },
     ]);
     // Update user profile hash
     await redis.hSet(`user:${interaction.user.id}:lifts`, {
       // Computer property name syntax
       [redisField]: JSON.stringify({
-        weight: pending.weight,
+        bench: pending.lifts.bench,
+        squat: pending.lifts.squat,
+        deadlift: pending.lifts.deadlift,
         dateAdded: pending.createdAt,
       }),
     });
@@ -151,6 +153,8 @@ module.exports = {
     const squat = interaction.options.getNumber("squat");
     const deadlift = interaction.options.getNumber("deadlift");
 
+    const total = bench + squat + deadlift;
+
     const lifts = {
       Bench: bench,
       Squat: squat,
@@ -186,6 +190,7 @@ module.exports = {
 
     // Add entry to the pending object
     setPending(interaction.user.id, {
+      total,
       lifts,
       gender,
       weightDivision,
