@@ -63,9 +63,9 @@ async function buttonHandler(interaction) {
     await redis.hSet(`user:${interaction.user.id}:lifts`, {
       // Computer property name syntax
       [redisField]: JSON.stringify({
-        bench: pending.lifts.bench,
-        squat: pending.lifts.squat,
-        deadlift: pending.lifts.deadlift,
+        bench: pending.lifts.Bench,
+        squat: pending.lifts.Squat,
+        deadlift: pending.lifts.Deadlift,
         dateAdded: pending.createdAt,
       }),
     });
@@ -81,7 +81,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}** in the ${pending.gender} ${pending.weightDivision}kg division.`,
+      content: `${interaction.user} submitted Bench:${pending.lifts.Bench}kg, Squat:${pending.lifts.Squat}kg, Deadlift:${pending.lifts.Deadlift}kg for the ${pending.gender} ${pending.weightDivision}kg division.`,
     });
   } else {
     await interaction.followUp({
@@ -211,7 +211,7 @@ module.exports = {
 
     // Request confirmation of submission
     const msg = await interaction.reply({
-      content: `You want to submit ${weight}kg for ${exercise} in the ${gender} ${weightDivision}kg division.\nIs this correct?`,
+      content: `You want to submit Bench:${bench}kg, Squat:${squat}kg, Deadlift:${deadlift}kg in the ${gender} ${weightDivision}kg division.\nIs this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object
