@@ -81,7 +81,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} submitted Bench:${pending.lifts.Bench}kg, Squat:${pending.lifts.Squat}kg, Deadlift:${pending.lifts.Deadlift}kg for the ${pending.gender} ${pending.weightDivision}kg division.`,
+      content: `${interaction.user} submitted **Bench:${pending.lifts.Bench}kg**, **Squat:${pending.lifts.Squat}kg**, **Deadlift:${pending.lifts.Deadlift}kg** for the ${pending.gender} ${pending.weightDivision}kg division. (**DOTS: ${dots}**)`,
     });
   } else {
     await interaction.followUp({
