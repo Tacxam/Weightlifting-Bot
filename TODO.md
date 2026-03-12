@@ -57,6 +57,6 @@ node index.js
 ## Utility
 [X] Configure scoreLeaderboardInitialiser
 [ ] Automatically assign memberships?
-[ ] Create optimal protein (1.6 - 2.2g/kg)
-[ ] Create lb/kg conversion
+[X] Create optimal protein (1.6 - 2.2g/kg)
+[X] Create lb/kg conversion
 [ ] Create HR zones estimator

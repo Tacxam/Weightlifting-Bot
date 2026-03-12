@@ -10,25 +10,11 @@ module.exports = {
   data: new SlashCommandSubcommandBuilder()
     .setName("plleaderboard")
     .setDescription("Display leaderboard of submitted scores")
-    .addStringOption((option) =>
+    .addChannelOption((option) =>
       option
-        .setName("exercise")
-        .setDescription("The relevant exercise leaderboard")
+        .setName("channel")
+        .setDescription("The relevant channel to place leaderboard.")
         .setRequired(true)
-        .setChoices(...exerciseChoices),
-    )
-    .addStringOption((option) =>
-      option
-        .setName("gender")
-        .setDescription("The division gender")
-        .setRequired(true)
-        .addChoices(...genderDivisions),
-    )
-    .addNumberOption((option) =>
-      option
-        .setName("weightdivision")
-        .setDescription("The division weight class")
-        .setRequired(true),
     ),
 
   async execute(interaction) {
