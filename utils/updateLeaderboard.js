@@ -32,26 +32,28 @@ async function updateLeaderboardMessage(client, redis, exercise) {
 }
 
 async function updateLeaderboardPL(client, redis) {
-  const top = await redis.zRangeWithScores(
-    `powerlifting`,
-    0,
-    9,
-    {
-      REV: true,
-    },
-  );
+  const top = await redis.zRangeWithScores(`powerlifting`, 0, 9, {
+    REV: true,
+  });
 
   let content = `**Powerlifting Leaderboard (Top 10 DOTS):**\n`;
   if (!top.length) {
     content += "No scores yet";
   } else {
-      for (const user of top) {
+    let index = 1;
+
+    for (const user of top) {
       const userId = user.value;
       const dots = user.score;
+
+      const lifts = await redis.hGet(`user:${userId}:lifts`, "powerlifting");
+
+      content += `${index}. ${userId} - **Bench: ${lifts.bench} Squat: ${lifts.squat} Deadlift: ${lifts.deadlift} - DOTS: ${dots}\n`
+      index++;
     }
   }
 
-	return content;
+  return content;
 }
 
 module.exports = { updateLeaderboardMessage, updateLeaderboardPL };
