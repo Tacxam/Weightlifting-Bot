@@ -33,7 +33,7 @@ async function updateLeaderboardMessage(client, redis, exercise) {
 
 async function updateLeaderboardPL(client, redis) {
   const top = await redis.zRangeWithScores(
-    `${gender}:${weightDivision}:${exercise}`,
+    `powerlifting`,
     0,
     9,
     {
@@ -45,11 +45,10 @@ async function updateLeaderboardPL(client, redis) {
   if (!top.length) {
     content += "No scores yet";
   } else {
-    content += top.map(
-      (element, index) =>
-        `${index + 1}. <@${element.value}> - **${element.score}**`,
-    )
-		.join("\n");
+      for (const user of top) {
+      const userId = user.value;
+      const dots = user.score;
+    }
   }
 
 	return content;
