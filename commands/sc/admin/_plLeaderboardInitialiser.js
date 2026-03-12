@@ -1,41 +1,52 @@
-const { SlashCommandSubcommandBuilder } = require("discord.js");
+const {
+  SlashCommandSubcommandBuilder,
+  ChannelType,
+  MessageFlags,
+} = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
-const genderDivisions = require("../../../utils/genderDivisions.js");
-const { getWeightDivision } = require("../../../utils/weightDivisions.js");
-const { updateLeaderboardPL } = require("../../../utils/updateLeaderboard.js");
+const { updateLeaderboardMessage } = require("../../../utils/updateLeaderboard.js")
 
-// Displays Leaderboard
+// Initialises a /score leaderboard to specific channel
 module.exports = {
-  name: "plleaderboard",
+  name: "leaderboard",
   data: new SlashCommandSubcommandBuilder()
-    .setName("plleaderboard")
-    .setDescription("Display leaderboard of submitted scores")
+    .setName("leaderboard")
+    .setDescription("Initialise a leaderboard of submitted scores.")
     .addChannelOption((option) =>
       option
         .setName("channel")
         .setDescription("The relevant channel to place leaderboard.")
         .setRequired(true)
+        .addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement),
+    )
+    .addStringOption((option) =>
+      option
+        .setName("exercise")
+        .setDescription("The exercise being leaderboarded.")
+        .setRequired(true)
+        .addChoices(...exerciseChoices),
     ),
-
+    
   async execute(interaction) {
+    const channel = interaction.options.getChannel("channel");
     const exercise = interaction.options.getString("exercise");
-    const gender = interaction.options.getString("gender");
-    const userWeight = interaction.options.getNumber("weightdivision");
 
-    const weightDivision = getWeightDivision(userWeight, gender);
-
+    const msg = await channel.send({
+      content: `**${exercise} Leaderboard (Top 10):**\n`
+    })
+    
+    // Set pointer to channel and message
     const { redis } = interaction.client;
 
-    const content = await updateLeaderboardPL(
-      redis,
-      exercise,
-      gender,
-      weightDivision,
-    );
+    await redis.set(`lbchannel:${exercise}`, channel.id);
+    await redis.set(`lbmsg:${exercise}`, msg.id);
 
-    await interaction.reply({
-      content: content,
+    updateLeaderboardMessage(interaction.client, redis, exercise);
+
+    return interaction.reply({
+      content: `Leaderboard created in ${channel} for **${exercise}**.`,
+      flags: MessageFlags.Ephemeral,
       allowedMentions: { users: [] },
-    });
+    })
   },
 };

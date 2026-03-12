@@ -31,7 +31,7 @@ async function updateLeaderboardMessage(client, redis, exercise) {
   await msg.edit({ content });
 }
 
-async function updateLeaderboardPL(redis, exercise, gender, weightDivision) {
+async function updateLeaderboardPL(client, redis) {
   const top = await redis.zRangeWithScores(
     `${gender}:${weightDivision}:${exercise}`,
     0,
@@ -41,7 +41,7 @@ async function updateLeaderboardPL(redis, exercise, gender, weightDivision) {
     },
   );
 
-  let content = `**${exercise}:${gender}:${weightDivision}kg Leaderboard (Top 10):**\n`;
+  let content = `**Powerlifting Leaderboard (Top 10 DOTS):**\n`;
   if (!top.length) {
     content += "No scores yet";
   } else {
