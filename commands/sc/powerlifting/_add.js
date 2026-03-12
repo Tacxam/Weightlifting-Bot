@@ -17,6 +17,9 @@ const memberRole = require("../../../utils/roles.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
 const { getWeightDivision } = require("../../../utils/weightDivisions.js");
 const records = require("../../../utils/worldRecords.js");
+const {
+  updateLeaderboardPL,
+} = require("../../../utils/updateLeaderboard.js");
 const { dotsCalculator } = require("../../../utils/dotsHandler.js");
 
 // Button handling
@@ -69,6 +72,8 @@ async function buttonHandler(interaction) {
         dateAdded: pending.createdAt,
       }),
     });
+
+    updateLeaderboardPL(interaction.client, redis);
 
     deletePending(interaction.user.id);
   }

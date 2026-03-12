@@ -1,3 +1,4 @@
+// This handles all the updating of both score and powerlifting leaderboards
 async function updateLeaderboardMessage(client, redis, exercise) {
   const channelId = await redis.get(`lbchannel:${exercise}`);
   const msgId = await redis.get(`lbmsg:${exercise}`);
@@ -55,7 +56,7 @@ async function updateLeaderboardPL(client, redis) {
 
       const lifts = JSON.parse(json);
 
-      content += `${index}. <@${userId}> - **Bench: ${lifts.bench} Squat: ${lifts.squat} Deadlift: ${lifts.deadlift}** - **DOTS: ${dots}**\n`;
+      content += `${index}. <@${userId}> - **Bench:** ${lifts.bench} **Squat:** ${lifts.squat} **Deadlift:** ${lifts.deadlift} - **DOTS: ${dots}**\n`;
       index++;
     }
   }

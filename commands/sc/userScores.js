@@ -26,6 +26,7 @@ module.exports = {
     if (Object.keys(lifts).length === 0) {
       return interaction.reply({
         content: `${user} has not recorded any lifts.`,
+        allowedMentions: { parse: [] }
       });
     }
 
