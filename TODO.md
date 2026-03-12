@@ -37,7 +37,7 @@ node index.js
 [ ] Moderation of extreme or impossible scores
 - [X] Negative handling
 - [X] Extreme score handling
-[ ] DOTS leaderboard !!!
+[X] DOTS leaderboard !!!
 [ ] DOTS percentile
 [ ] Update *score* leaderboard if PL score is higher than existing score
 
