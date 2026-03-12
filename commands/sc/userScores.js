@@ -37,6 +37,7 @@ module.exports = {
 
     interaction.reply({
       content: `**${user}'s scores:**\n${content}`,
+      allowedMentions: { users: [] },
     });
   },
 };

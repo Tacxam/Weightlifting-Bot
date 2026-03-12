@@ -28,10 +28,15 @@ async function updateLeaderboardMessage(client, redis, exercise) {
   if (!channel?.isTextBased()) return;
 
   const msg = await channel.messages.fetch(msgId);
-  await msg.edit({ content });
+  await msg.edit({ content, allowedMentions: { parse: [] } });
 }
 
 async function updateLeaderboardPL(client, redis) {
+  const channelId = await redis.get(`lbchannel:powerlifting`);
+  const msgId = await redis.get(`lbmsg:powerlifting`);
+
+  if (!channelId || !msgId) return;
+
   const top = await redis.zRangeWithScores(`powerlifting`, 0, 9, {
     REV: true,
   });
@@ -46,9 +51,11 @@ async function updateLeaderboardPL(client, redis) {
       const userId = user.value;
       const dots = user.score;
 
-      const lifts = await redis.hGet(`user:${userId}:lifts`, "powerlifting");
+      const json = await redis.hGet(`user:${userId}:lifts`, "powerlifting");
 
-      content += `${index}. ${userId} - **Bench: ${lifts.bench} Squat: ${lifts.squat} Deadlift: ${lifts.deadlift}** - **DOTS: ${dots}**\n`
+      const lifts = JSON.parse(json);
+
+      content += `${index}. <@${userId}> - **Bench: ${lifts.bench} Squat: ${lifts.squat} Deadlift: ${lifts.deadlift}** - **DOTS: ${dots}**\n`;
       index++;
     }
   }
@@ -58,7 +65,7 @@ async function updateLeaderboardPL(client, redis) {
   if (!channel?.isTextBased()) return;
 
   const msg = await channel.messages.fetch(msgId);
-  await msg.edit({ content });
+  await msg.edit({ content, allowedMentions: { parse: [] } });
 }
 
 module.exports = { updateLeaderboardMessage, updateLeaderboardPL };
