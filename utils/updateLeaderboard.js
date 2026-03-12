@@ -48,12 +48,17 @@ async function updateLeaderboardPL(client, redis) {
 
       const lifts = await redis.hGet(`user:${userId}:lifts`, "powerlifting");
 
-      content += `${index}. ${userId} - **Bench: ${lifts.bench} Squat: ${lifts.squat} Deadlift: ${lifts.deadlift} - DOTS: ${dots}\n`
+      content += `${index}. ${userId} - **Bench: ${lifts.bench} Squat: ${lifts.squat} Deadlift: ${lifts.deadlift}** - **DOTS: ${dots}**\n`
       index++;
     }
   }
 
-  return content;
+  // Find channel
+  const channel = await client.channels.fetch(channelId);
+  if (!channel?.isTextBased()) return;
+
+  const msg = await channel.messages.fetch(msgId);
+  await msg.edit({ content });
 }
 
 module.exports = { updateLeaderboardMessage, updateLeaderboardPL };

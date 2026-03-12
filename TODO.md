@@ -53,6 +53,7 @@ node index.js
 
 **user**
 [X] Configure to handle hashing
+[ ] Fix handling for new powerlifting leaderboard style
 
 ## Utility
 [X] Configure scoreLeaderboardInitialiser
