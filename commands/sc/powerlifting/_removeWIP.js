@@ -42,11 +42,14 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
+    /* TODO FIX DATABASE HANDLING OF SCORE REMOVAL
+    */
+
     // Database handling
     const { redis } = interaction.client;
 
     // Submit score to relevant leaderboard
-    const redisField = `${pending.gender}:${pending.weightDivision}:${pending.exercise}`;
+    const redisField = `powerlifting`;
 
     // Get score for interaction reply
     score = await redis.zScore(redisField, interaction.user.id);
@@ -54,6 +57,8 @@ async function buttonHandler(interaction) {
 
     // Update user profile hash
     await redis.hDel(`user:${interaction.user.id}:lifts`, redisField);
+
+    updateLeaderboardPL(interaction.client, redis);
 
     deletePending(interaction.user.id);
   }
@@ -66,7 +71,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed && removals === 1) {
     await interaction.channel.send({
-      content: `${interaction.user} removed their PR for **${pending.exercise}** (**${score}kg**).`,
+      content: `${interaction.user} removed their powerlifting score.`,
     });
   } else if (confirmed && removals === 0) {
     await interaction.followUp({
