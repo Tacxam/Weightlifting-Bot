@@ -86,27 +86,7 @@ module.exports = {
   name: "remove",
   data: new SlashCommandSubcommandBuilder()
     .setName("remove")
-    .setDescription("Remove a score.")
-    .addStringOption((option) =>
-      option
-        .setName("exercise")
-        .setDescription("The exercise being submitted.")
-        .setRequired(true)
-        .addChoices(...exerciseChoices),
-    )
-    .addStringOption((option) =>
-      option
-        .setName("gender")
-        .setDescription("The gender being submitted")
-        .setRequired(true)
-        .addChoices(...genderDivisions),
-    )
-    .addNumberOption((option) =>
-      option
-        .setName("userweight")
-        .setDescription("The user weight being submitted")
-        .setRequired(true),
-    ),
+    .setDescription("Remove a score."),
 
   async execute(interaction) {
     // Role checking
@@ -129,19 +109,8 @@ module.exports = {
       });
     }
 
-    // Store values from options
-    const exercise = interaction.options.getString("exercise");
-    const gender = interaction.options.getString("gender");
-    const userWeight = interaction.options.getNumber("userweight");
-
-    const weightDivision = getWeightDivision(userWeight, gender);
-
     // Add entry to the pending object
-    setPending(interaction.user.id, {
-      exercise,
-      gender,
-      weightDivision,
-    });
+    setPending(interaction.user.id, {});
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -155,7 +124,7 @@ module.exports = {
     );
 
     const msg = await interaction.reply({
-      content: `You want to remove your PR for ${exercise}. Is this correct?`,
+      content: `Are you sure you want to remove your powerlifting record?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object

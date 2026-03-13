@@ -47,7 +47,7 @@ async function buttonHandler(interaction) {
     const dots = dotsCalculator(
       pending.total,
       pending.gender,
-      pending.weightDivision,
+      pending.userWeight,
     );
 
     // Database handling
@@ -199,6 +199,7 @@ module.exports = {
       total,
       lifts,
       gender,
+      userWeight,
       weightDivision,
     });
 
