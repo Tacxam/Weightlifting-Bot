@@ -16,6 +16,9 @@ const {
 const memberRole = require("../../../utils/roles.js");
 const genderDivisions = require("../../../utils/genderDivisions.js");
 const { getWeightDivision } = require("../../../utils/weightDivisions.js");
+const {
+  updateLeaderboardPL,
+} = require("../../../utils/updateLeaderboard.js");
 
 // Button handling
 async function buttonHandler(interaction) {
