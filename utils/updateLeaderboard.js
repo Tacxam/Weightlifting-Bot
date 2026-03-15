@@ -29,7 +29,7 @@ async function updateLeaderboardMessage(client, redis, exercise) {
   if (!channel?.isTextBased()) return;
 
   const msg = await channel.messages.fetch(msgId);
-  await msg.edit({ content, allowedMentions: { parse: [] } });
+  await msg.edit({ content });
 }
 
 async function updateLeaderboardPL(client, redis) {
@@ -66,7 +66,7 @@ async function updateLeaderboardPL(client, redis) {
   if (!channel?.isTextBased()) return;
 
   const msg = await channel.messages.fetch(msgId);
-  await msg.edit({ content, allowedMentions: { parse: [] } });
+  await msg.edit({ content });
 }
 
 module.exports = { updateLeaderboardMessage, updateLeaderboardPL };
