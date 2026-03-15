@@ -61,4 +61,4 @@ node index.js
 [X] Create optimal protein (1.6 - 2.2g/kg)
 [X] Create lb/kg conversion
 [ ] Create HR zones estimator
-[ ] BMI calculator
+[X] BMI calculator

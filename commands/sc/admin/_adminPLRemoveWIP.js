@@ -75,20 +75,12 @@ module.exports = {
         .setName("user")
         .setDescription("The user whose PR is being removed")
         .setRequired(true),
-    )
-    .addStringOption((option) =>
-      option
-        .setName("exercise")
-        .setDescription("The exercise PR that is being removed")
-        .setRequired(true)
-        .addChoices(...exerciseChoices),
     ),
     
   async execute(interaction) {
     const user = interaction.options.getUser("user");
-    const exercise = interaction.options.getString("exercise");
 
-    setPending(interaction.user.id, { user, exercise });
+    setPending(interaction.user.id, { user });
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
