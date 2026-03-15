@@ -11,8 +11,11 @@ node index.js
 
 # Functionality
 ## Admin (Deadass need to do heaps with this, but this will come last)
-**removeUserScores** This removes all scores from a user
-[ ] Create this tool
+**removeUserScores** This removes all scores from a user [ ] Create this tool
+[ ] PL remove
+[ ] PL add
+[ ] add
+[ ] remove
 
 ## Score
 [ ] Moderation of extreme or impossible scores
