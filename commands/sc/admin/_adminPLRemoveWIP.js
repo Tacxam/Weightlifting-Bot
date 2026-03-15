@@ -12,6 +12,9 @@ const {
   getPending,
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
+const {
+  updateLeaderboardPL,
+} = require("../../../utils/updateLeaderboard.js");
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -35,13 +38,20 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
-    /*
-     ... functionality
-     Check for score
-     if score exists
-     delete score, reply saying score deleted
-     else, reply saying no score found
-    */
+    // Database handling
+    const { redis } = interaction.client;
+
+    // Submit score to relevant leaderboard
+    const redisField = `powerlifting`;
+
+    // Get score for interaction reply
+    score = await redis.zScore(redisField, pending.user.id);
+    removals = await redis.zRem(redisField, pending.user.id);
+
+    // Update user profile hash
+    await redis.hDel(`user:${pending.user.id}:lifts`, redisField);
+
+    updateLeaderboardPL(interaction.client, redis);
 
     deletePending(interaction.user.id);
   }
@@ -54,7 +64,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} removed ${pending.user}'s score for **${pending.exercise}**`,
+      content: `${interaction.user} removed ${pending.user}'s powerlifting score`,
     });
   } else {
     await interaction.followUp({
@@ -95,7 +105,7 @@ module.exports = {
 
     // Request confirmation of submission
     const msg = await interaction.reply({
-      content: `You want to remove the ${exercise} score for ${user}.\nIs this correct?`,
+      content: `You will be removing ${user}'s powerlifting score, are you sure?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object
