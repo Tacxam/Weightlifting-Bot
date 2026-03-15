@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const { getBMI } = require("../../utils/bmi.js");
 
 module.exports = {
   name: "bmi",
@@ -21,13 +22,13 @@ module.exports = {
     ),
 
   async execute(interaction) {
+		const height = interaction.options.getNumber("height");
     const bodyweight = interaction.options.getNumber("bodyweight");
 
-    const lowerBound = (1.6 * bodyweight).toFixed(0);
-		const upperBound = (2.2 * bodyweight).toFixed(0);
+		const content = getBMI(height, bodyweight);
 
     return interaction.reply({
-      content: `Ideal protein intake for a bodyweight of **${bodyweight}kg** is between **${lowerBound}g** to **${upperBound}g** (1.6 - 2.2 g/kg) per day during a bulk.\nHigher protein intake may be recommended on a cut.`,
+      content,
     });
   },
 };

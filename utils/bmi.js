@@ -11,9 +11,9 @@ function getBMI(height, bodyweight) {
 
 	roundedBMI = bmi.toFixed(1);
 
-  let content = `BMI for Height:${height}cm and Bodyweight: ${bodyweight}kg is ${roundedBMI}. This is considered `;
+  let content = `BMI for Height: **${height}cm** and Bodyweight: **${bodyweight}kg** is **${roundedBMI}**. This is considered **`;
 
-	content += category ? category.name : "Obese";
+	content += category ? category.name + "**" : "Obese**";
 
 	return content;
 }
