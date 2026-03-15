@@ -66,9 +66,9 @@ async function buttonHandler(interaction) {
 
 // Delete score from leaderboard
 module.exports = {
-  name: "remove",
+  name: "plremove",
   data: new SlashCommandSubcommandBuilder()
-    .setName("remove")
+    .setName("plremove")
     .setDescription("Remove a user's PR. (Admin Only)")
     .addUserOption((option) =>
       option

@@ -28,14 +28,20 @@ async function buttonHandler(interaction) {
     if (!pending) {
       return interaction.update({
         content:
-          "No pending submission found, the command may have expired. Please try running the command again.",
+          "No pending removal found, the command may have expired. Please try running the command again.",
         components: [],
       });
     }
 
     confirmed = true;
 
-    // ... functionality
+    /*
+     ... functionality
+     Check for score
+     if score exists
+     delete score, reply saying score deleted
+     else, reply saying no score found
+    */
 
     deletePending(interaction.user.id);
   }
@@ -48,11 +54,11 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} set ${pending.user}'s **${pending.exercise}** as **${pending.weight}kg**`,
+      content: `${interaction.user} removed ${pending.user}'s score for **${pending.exercise}**`,
     });
   } else {
     await interaction.followUp({
-      content: "Command cancelled, nothing was submitted.",
+      content: "Command cancelled, nothing was removed.",
       flags: MessageFlags.Ephemeral,
     });
   }
@@ -60,36 +66,29 @@ async function buttonHandler(interaction) {
 
 // Delete score from leaderboard
 module.exports = {
-  name: "pladd",
+  name: "remove",
   data: new SlashCommandSubcommandBuilder()
-    .setName("pladd")
-    .setDescription("Add a PR to a user. (Admin Only)")
+    .setName("remove")
+    .setDescription("Remove a user's PR. (Admin Only)")
     .addUserOption((option) =>
       option
         .setName("user")
-        .setDescription("The user whose PR is being added")
+        .setDescription("The user whose PR is being removed")
         .setRequired(true),
     )
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise PR that is being added")
+        .setDescription("The exercise PR that is being removed")
         .setRequired(true)
-				.addChoices(...exerciseChoices),
-    )
-		.addIntegerOption((option) =>
-			option
-				.setName("weight")
-				.setDescription("The exercise weight that is being added")
-				.setRequired(true)
-		),
-
+        .addChoices(...exerciseChoices),
+    ),
+    
   async execute(interaction) {
     const user = interaction.options.getUser("user");
     const exercise = interaction.options.getString("exercise");
-		const weight = interaction.options.getInteger("weight");
 
-    setPending(interaction.user.id, { user, exercise, weight});
+    setPending(interaction.user.id, { user, exercise });
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -104,7 +103,7 @@ module.exports = {
 
     // Request confirmation of submission
     const msg = await interaction.reply({
-      content: `You want to submit ${weight}kg as ${user}'s ${exercise} score.\nIs this correct?`,
+      content: `You want to remove the ${exercise} score for ${user}.\nIs this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object
