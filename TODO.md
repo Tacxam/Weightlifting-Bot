@@ -43,7 +43,7 @@ node index.js
 - [X] Extreme score handling
 [X] DOTS leaderboard !!!
 [ ] DOTS percentile
-[ ] Update *score* leaderboard if PL score is higher than existing score
+[-] Update *score* leaderboard if PL score is higher than existing score
 
 **add**
 [X] Set permissions to only members or admin
