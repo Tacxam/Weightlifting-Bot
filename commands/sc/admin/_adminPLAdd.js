@@ -88,6 +88,7 @@ async function buttonHandler(interaction) {
     await interaction.channel.send({
       content: `${interaction.user} submitted **Bench:${pending.lifts.Bench}kg**, **Squat:${pending.lifts.Squat}kg**, **Deadlift:${pending.lifts.Deadlift}kg** in the ${pending.gender} ${pending.weightDivision}kg division for ${pending.user}. (**DOTS: ${dots}**)`,
     });
+    console.log(`${interaction.user.username} submitted **Bench:${pending.lifts.Bench}kg**, **Squat:${pending.lifts.Squat}kg**, **Deadlift:${pending.lifts.Deadlift}kg** in the ${pending.gender} ${pending.weightDivision}kg division for ${pending.user.username}. (**DOTS: ${dots}**)`);
   } else {
     await interaction.followUp({
       content: "Command cancelled, nothing was submitted.",

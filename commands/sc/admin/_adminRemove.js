@@ -71,6 +71,7 @@ async function buttonHandler(interaction) {
     await interaction.channel.send({
       content: `${interaction.user} removed ${pending.user}'s PR for **${pending.exercise}** (**${score}kg**).`,
     });
+    console.log(`${interaction.user.username} removed ${pending.user.username}'s PR for **${pending.exercise}** (**${score}kg**).`);
   } else if (confirmed && removals === 0) {
     await interaction.followUp({
       content: "No PR found, nothing was removed.",

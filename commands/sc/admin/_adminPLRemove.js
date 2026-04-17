@@ -66,6 +66,7 @@ async function buttonHandler(interaction) {
     await interaction.channel.send({
       content: `${interaction.user} removed ${pending.user}'s powerlifting score`,
     });
+    console.log(`${interaction.user.username} removed ${pending.user.username}'s powerlifting score`);
   } else {
     await interaction.followUp({
       content: "Command cancelled, nothing was removed.",
