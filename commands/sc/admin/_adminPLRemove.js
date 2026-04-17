@@ -25,6 +25,8 @@ async function buttonHandler(interaction) {
 
   const pending = getPending(interaction.user.id);
   let confirmed = false;
+  let removals = 0;
+
   // Confirm Button
   if (interaction.customId === "confirm") {
     // If there is no pending (expired?)
@@ -62,11 +64,16 @@ async function buttonHandler(interaction) {
   }
 
   // Handle text outputs
-  if (confirmed) {
+  if (confirmed && removals === 1) {
     await interaction.channel.send({
       content: `${interaction.user} removed ${pending.user}'s powerlifting score`,
     });
     console.log(`${interaction.user.username} removed ${pending.user.username}'s powerlifting score`);
+  } else if (confirmed && removals === 0) {
+    await interaction.followUp({
+      content: "No powerlifting score found, nothing was removed.",
+      flags: MessageFlags.Ephemeral,
+    }); 
   } else {
     await interaction.followUp({
       content: "Command cancelled, nothing was removed.",

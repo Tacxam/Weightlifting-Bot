@@ -28,7 +28,6 @@ async function buttonHandler(interaction) {
   const pending = getPending(interaction.user.id);
   let confirmed = false;
   let removals = 0;
-  let score;
 
   // Confirm Button
   if (interaction.customId === "confirm") {
