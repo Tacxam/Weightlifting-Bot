@@ -86,7 +86,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} submitted **Bench:${pending.lifts.Bench}kg**, **Squat:${pending.lifts.Squat}kg**, **Deadlift:${pending.lifts.Deadlift}kg** for the ${pending.gender} ${pending.weightDivision}kg division. (**DOTS: ${dots}**)`,
+      content: `${interaction.user} submitted **Bench:${pending.lifts.Bench}kg**, **Squat:${pending.lifts.Squat}kg**, **Deadlift:${pending.lifts.Deadlift}kg** in the ${pending.gender} ${pending.weightDivision}kg division for ${pending.user}. (**DOTS: ${dots}**)`,
     });
   } else {
     await interaction.followUp({
@@ -226,7 +226,7 @@ module.exports = {
 
     // Request confirmation of submission
     const msg = await interaction.reply({
-      content: `You want to submit Bench:${bench}kg, Squat:${squat}kg, Deadlift:${deadlift}kg in the ${gender} ${weightDivision}kg division.\nIs this correct?`,
+      content: `You want to submit Bench:${bench}kg, Squat:${squat}kg, Deadlift:${deadlift}kg in the ${gender} ${weightDivision}kg division for ${user}.\nIs this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object
