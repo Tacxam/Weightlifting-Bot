@@ -13,13 +13,13 @@ node index.js
 # Functionality
 ## Admin (Deadass need to do heaps with this, but this will come last)
 **removeUserScores** This removes all scores from a user [ ] Create this tool
-[ ] PL remove
-[ ] PL add
-[ ] add
-[ ] remove
+[X] PL remove
+[X] PL add
+[X] add
+[X] remove
 
 ## Score
-[ ] Moderation of extreme or impossible scores
+[X] Moderation of extreme or impossible scores
 - [X] Negative handling
 - [X] Extreme score handling
 [-] Female leaderboard variation (Not sure if this is feasible)
@@ -42,7 +42,7 @@ node index.js
 - [X] Negative handling
 - [X] Extreme score handling
 [X] DOTS leaderboard !!!
-[ ] DOTS percentile
+[ ] DOTS percentile (Likely impossible)
 [-] Update *score* leaderboard if PL score is higher than existing score
 
 **add**
@@ -57,7 +57,7 @@ node index.js
 
 **user**
 [X] Configure to handle hashing
-[ ] Fix handling for new powerlifting leaderboard style
+[X] Fix handling for new powerlifting leaderboard style (NOTE: Filtered it, didn't change handling)
 
 ## Utility
 [X] Configure scoreLeaderboardInitialiser
