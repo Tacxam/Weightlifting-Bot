@@ -102,6 +102,12 @@ module.exports = {
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
     .setDescription("Add powerlifting PRs.")
+    .addUserOption((option) =>
+      option
+        .setName("user")
+        .setDescription("The user whose powerlifting scores are being submitted")
+        .setRequired(true),
+    )
     .addNumberOption((option) =>
       option
         .setName("bench")
@@ -155,6 +161,8 @@ module.exports = {
       });
     }
 
+    const user = interaction.options.getUser("user");
+
     const bench = interaction.options.getNumber("bench");
     const squat = interaction.options.getNumber("squat");
     const deadlift = interaction.options.getNumber("deadlift");
@@ -196,6 +204,7 @@ module.exports = {
 
     // Add entry to the pending object
     setPending(interaction.user.id, {
+      user,
       total,
       lifts,
       gender,
