@@ -5,6 +5,7 @@ const {
   ButtonStyle,
   MessageFlags,
   ComponentType,
+  PermissionFlagsBits,
 } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
 const {
@@ -12,6 +13,10 @@ const {
   getPending,
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
+const memberRole = require("../../../utils/roles.js");
+const {
+  updateLeaderboardMessage,
+} = require("../../../utils/updateLeaderboard.js");
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -22,6 +27,9 @@ async function buttonHandler(interaction) {
 
   const pending = getPending(interaction.user.id);
   let confirmed = false;
+  let removals = 0;
+  let score;
+
   // Confirm Button
   if (interaction.customId === "confirm") {
     // If there is no pending (expired?)
@@ -35,13 +43,20 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
-    /*
-     ... functionality
-     Check for score
-     if score exists
-     delete score, reply saying score deleted
-     else, reply saying no score found
-    */
+    // Database handling
+    const { redis } = interaction.client;
+
+    // Submit score to relevant leaderboard
+    const redisField = `${pending.exercise}`;
+
+    // Get score for interaction reply
+    score = await redis.zScore(redisField, interaction.user.id);
+    removals = await redis.zRem(redisField, interaction.user.id);
+
+    // Update user profile hash
+    await redis.hDel(`user:${interaction.user.id}:lifts`, redisField);
+
+    updateLeaderboardMessage(interaction.client, redis, pending.exercise);
 
     deletePending(interaction.user.id);
   }
@@ -52,9 +67,14 @@ async function buttonHandler(interaction) {
   }
 
   // Handle text outputs
-  if (confirmed) {
+  if (confirmed && removals === 1) {
     await interaction.channel.send({
-      content: `${interaction.user} removed ${pending.user}'s score for **${pending.exercise}**`,
+      content: `${interaction.user} removed their PR for **${pending.exercise}** (**${score}kg**).`,
+    });
+  } else if (confirmed && removals === 0) {
+    await interaction.followUp({
+      content: "No PR found, nothing was removed.",
+      flags: MessageFlags.Ephemeral,
     });
   } else {
     await interaction.followUp({
@@ -69,22 +89,42 @@ module.exports = {
   name: "remove",
   data: new SlashCommandSubcommandBuilder()
     .setName("remove")
-    .setDescription("Remove a user's PR. (Admin Only)")
+    .setDescription("Remove a score.")
     .addUserOption((option) =>
       option
         .setName("user")
-        .setDescription("The user whose PR is being removed")
-        .setRequired(true),
+        .setDescription("The user whose score is being removed")
+        .setRequired(true)
     )
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise PR that is being removed")
+        .setDescription("The exercise PR that is being removed.")
         .setRequired(true)
         .addChoices(...exerciseChoices),
     ),
-    
+
   async execute(interaction) {
+    // Role checking
+    if (!interaction.inGuild()) {
+      return interaction.reply({
+        content: "This command can only be used in a server.",
+        flags: MessageFlags.Ephemeral,
+      });
+    }
+
+    const hasMember = interaction.member.roles.cache.has(memberRole);
+    const isAdmin = interaction.member.permissions.has(
+      PermissionFlagsBits.Administrator,
+    );
+
+    if (!hasMember && !isAdmin) {
+      return interaction.reply({
+        content: "Missing member role",
+        flags: MessageFlags.Ephemeral,
+      });
+    }
+
     const user = interaction.options.getUser("user");
     const exercise = interaction.options.getString("exercise");
 
@@ -101,9 +141,8 @@ module.exports = {
         .setStyle(ButtonStyle.Danger),
     );
 
-    // Request confirmation of submission
     const msg = await interaction.reply({
-      content: `You want to remove the ${exercise} score for ${user}.\nIs this correct?`,
+      content: `You want to remove your PR for ${exercise}. Is this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object

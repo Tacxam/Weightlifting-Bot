@@ -97,6 +97,7 @@ module.exports = {
         .setRequired(true)
         .addChoices(...exerciseChoices),
     ),
+    
   async execute(interaction) {
     // Role checking
     if (!interaction.inGuild()) {
