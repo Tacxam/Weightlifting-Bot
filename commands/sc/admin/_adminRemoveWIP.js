@@ -50,11 +50,11 @@ async function buttonHandler(interaction) {
     const redisField = `${pending.exercise}`;
 
     // Get score for interaction reply
-    score = await redis.zScore(redisField, interaction.user.id);
-    removals = await redis.zRem(redisField, interaction.user.id);
+    score = await redis.zScore(redisField, pending.user.id);
+    removals = await redis.zRem(redisField, pending.user.id);
 
     // Update user profile hash
-    await redis.hDel(`user:${interaction.user.id}:lifts`, redisField);
+    await redis.hDel(`user:${pending.user.id}:lifts`, redisField);
 
     updateLeaderboardMessage(interaction.client, redis, pending.exercise);
 
@@ -69,7 +69,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed && removals === 1) {
     await interaction.channel.send({
-      content: `${interaction.user} removed their PR for **${pending.exercise}** (**${score}kg**).`,
+      content: `${interaction.user} removed ${pending.user}'s PR for **${pending.exercise}** (**${score}kg**).`,
     });
   } else if (confirmed && removals === 0) {
     await interaction.followUp({
@@ -142,7 +142,7 @@ module.exports = {
     );
 
     const msg = await interaction.reply({
-      content: `You want to remove your PR for ${exercise}. Is this correct?`,
+      content: `You want to remove ${user}'s PR for ${exercise}. Is this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object
