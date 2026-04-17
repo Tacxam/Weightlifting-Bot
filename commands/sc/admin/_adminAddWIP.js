@@ -5,6 +5,7 @@ const {
   ButtonStyle,
   MessageFlags,
   ComponentType,
+  PermissionFlagsBits,
 } = require("discord.js");
 const exerciseChoices = require("../../../utils/exerciseChoices.js");
 const {
@@ -12,6 +13,11 @@ const {
   getPending,
   deletePending,
 } = require("../../../utils/pendingSubmission.js");
+const memberRole = require("../../../utils/roles.js");
+const {
+  updateLeaderboardMessage,
+} = require("../../../utils/updateLeaderboard.js");
+const records = require("../../../utils/worldRecords.js");
 
 // Button handling
 async function buttonHandler(interaction) {
@@ -35,7 +41,26 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
-    // ... functionality
+    // Database handling
+    const { redis } = interaction.client;
+
+    // Submit score to relevant leaderboard
+    const redisField = `${pending.exercise}`;
+
+    await redis.zAdd(`${pending.exercise}`, [
+      { value: interaction.user.id, score: pending.weight },
+    ]);
+
+    // Update user profile hash
+    await redis.hSet(`user:${interaction.user.id}:lifts`, {
+      // Computer property name syntax
+      [redisField]: JSON.stringify({
+        weight: pending.weight,
+        dateAdded: pending.createdAt,
+      }),
+    });
+
+    updateLeaderboardMessage(interaction.client, redis, pending.exercise);
 
     deletePending(interaction.user.id);
   }
@@ -48,7 +73,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} set ${pending.user}'s **${pending.exercise}** as **${pending.weight}kg**`,
+      content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}**.`,
     });
   } else {
     await interaction.followUp({
@@ -58,39 +83,73 @@ async function buttonHandler(interaction) {
   }
 }
 
-// Delete score from leaderboard
+// Add score to leaderboard (Delete any previous score)
 module.exports = {
   name: "add",
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
-    .setDescription("Add a PR to a user. (Admin Only)")
-    .addUserOption((option) =>
+    .setDescription("Add a PR. If PR already exists, overwrites old PR.")
+    .addNumberOption((option) =>
       option
-        .setName("user")
-        .setDescription("The user whose PR is being added")
+        .setName("weight")
+        .setDescription("The weight being submitted.")
         .setRequired(true),
     )
     .addStringOption((option) =>
       option
         .setName("exercise")
-        .setDescription("The exercise PR that is being added")
+        .setDescription("The exercise being submitted.")
         .setRequired(true)
-				.addChoices(...exerciseChoices),
-    )
-		.addIntegerOption((option) =>
-			option
-				.setName("weight")
-				.setDescription("The exercise weight that is being added")
-				.setRequired(true)
-		),
+        .addChoices(...exerciseChoices),
+    ),
 
   async execute(interaction) {
-    const user = interaction.options.getUser("user");
+    // Role checking
+    if (!interaction.inGuild()) {
+      return interaction.reply({
+        content: "This command can only be used in a server.",
+        flags: MessageFlags.Ephemeral,
+      });
+    }
+
+    const hasMember = interaction.member.roles.cache.has(memberRole);
+    const isAdmin = interaction.member.permissions.has(
+      PermissionFlagsBits.Administrator,
+    );
+
+    if (!hasMember && !isAdmin) {
+      return interaction.reply({
+        content: "Missing member role",
+        flags: MessageFlags.Ephemeral,
+      });
+    }
+
+    // Store values from options
+    const weight = interaction.options.getNumber("weight");
+
+    if (weight <= 0) {
+      return interaction.reply({
+        content: "Cannot submit a negative weight",
+        flags: MessageFlags.Ephemeral,
+      });
+    }
+
     const exercise = interaction.options.getString("exercise");
-		const weight = interaction.options.getInteger("weight");
 
-    setPending(interaction.user.id, { user, exercise, weight});
+    const record = records[exercise];
 
+    // Checks to see if record exists and if it does, checks to see if weight exceeds record
+    if (record && weight >= record) {
+      return interaction.reply({
+        content: `Lift exceeds current raw world record for ${exercise} (${record}kg)`,
+        flags: MessageFlags.Ephemeral,
+      });
+    }
+
+    // Add entry to the pending object
+    setPending(interaction.user.id, { weight, exercise });
+
+    // Create button components
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId("confirm")
@@ -104,7 +163,7 @@ module.exports = {
 
     // Request confirmation of submission
     const msg = await interaction.reply({
-      content: `You want to submit ${weight}kg as ${user}'s ${exercise} score.\nIs this correct?`,
+      content: `You want to submit ${weight}kg for ${exercise}.\nIs this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object
