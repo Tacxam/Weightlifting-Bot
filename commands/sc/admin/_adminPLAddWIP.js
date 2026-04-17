@@ -58,12 +58,12 @@ async function buttonHandler(interaction) {
 
     await redis.zAdd(redisField, [
       {
-        value: interaction.user.id,
+        value: pending.user.id,
         score: dots,
       },
     ]);
     // Update user profile hash
-    await redis.hSet(`user:${interaction.user.id}:lifts`, {
+    await redis.hSet(`user:${pending.user.id}:lifts`, {
       // Computer property name syntax
       [redisField]: JSON.stringify({
         bench: pending.lifts.Bench,
@@ -98,9 +98,9 @@ async function buttonHandler(interaction) {
 
 // Add score to leaderboard (Delete any previous score)
 module.exports = {
-  name: "add",
+  name: "pladd",
   data: new SlashCommandSubcommandBuilder()
-    .setName("add")
+    .setName("pladd")
     .setDescription("Add powerlifting PRs.")
     .addUserOption((option) =>
       option
