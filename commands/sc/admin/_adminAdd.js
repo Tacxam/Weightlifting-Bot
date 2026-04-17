@@ -48,11 +48,11 @@ async function buttonHandler(interaction) {
     const redisField = `${pending.exercise}`;
 
     await redis.zAdd(`${pending.exercise}`, [
-      { value: interaction.user.id, score: pending.weight },
+      { value: pending.user.id, score: pending.weight },
     ]);
 
     // Update user profile hash
-    await redis.hSet(`user:${interaction.user.id}:lifts`, {
+    await redis.hSet(`user:${pending.user.id}:lifts`, {
       // Computer property name syntax
       [redisField]: JSON.stringify({
         weight: pending.weight,
