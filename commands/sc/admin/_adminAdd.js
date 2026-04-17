@@ -73,7 +73,7 @@ async function buttonHandler(interaction) {
   // Handle text outputs
   if (confirmed) {
     await interaction.channel.send({
-      content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}**.`,
+      content: `${interaction.user} submitted **${pending.weight}kg** as ${pending.user}'s **${pending.exercise}**.`,
     });
   } else {
     await interaction.followUp({
@@ -170,7 +170,7 @@ module.exports = {
 
     // Request confirmation of submission
     const msg = await interaction.reply({
-      content: `You want to submit ${weight}kg for ${exercise}.\nIs this correct?`,
+      content: `You want to submit ${weight}kg as ${user}'s ${exercise}.\nIs this correct?`,
       components: [row],
       flags: MessageFlags.Ephemeral,
       // Gives access to the interaction.reply object
