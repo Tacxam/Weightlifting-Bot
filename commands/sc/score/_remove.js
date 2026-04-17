@@ -71,6 +71,7 @@ async function buttonHandler(interaction) {
     await interaction.channel.send({
       content: `${interaction.user} removed their PR for **${pending.exercise}** (**${score}kg**).`,
     });
+    console.log(`${interaction.user.username} removed their PR for **${pending.exercise}** (**${score}kg**).`)
   } else if (confirmed && removals === 0) {
     await interaction.followUp({
       content: "No PR found, nothing was removed.",
@@ -97,7 +98,7 @@ module.exports = {
         .setRequired(true)
         .addChoices(...exerciseChoices),
     ),
-    
+
   async execute(interaction) {
     // Role checking
     if (!interaction.inGuild()) {

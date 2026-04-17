@@ -32,6 +32,7 @@ module.exports = {
       await interaction.reply(
         `Command \`${newCommand.data.name}\` was reloaded!`,
       );
+      console.log(`Command \`${newCommand.data.name}\` was reloaded!`);
     } catch (error) {
       console.error(error);
       await interaction.reply(

@@ -41,5 +41,6 @@ module.exports = {
       flags: MessageFlags.Ephemeral,
       allowedMentions: { users: [] },
     })
+    console.log(`Leaderboard created in ${channel.name} for Powerlifting.`);
   },
 };

@@ -45,9 +45,6 @@ async function buttonHandler(interaction) {
 
     confirmed = true;
 
-    /* TODO FIX DATABASE HANDLING OF SCORE REMOVAL
-    */
-
     // Database handling
     const { redis } = interaction.client;
 
@@ -76,6 +73,7 @@ async function buttonHandler(interaction) {
     await interaction.channel.send({
       content: `${interaction.user} removed their powerlifting score.`,
     });
+    console.log(`${interaction.user.username} removed their powerlifting score.`);
   } else if (confirmed && removals === 0) {
     await interaction.followUp({
       content: "No PR found, nothing was removed.",

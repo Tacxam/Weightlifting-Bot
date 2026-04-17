@@ -75,6 +75,7 @@ async function buttonHandler(interaction) {
     await interaction.channel.send({
       content: `${interaction.user} submitted **${pending.weight}kg** for **${pending.exercise}**.`,
     });
+    console.log(`${interaction.user.username} submitted **${pending.weight}kg** for **${pending.exercise}**.`);
   } else {
     await interaction.followUp({
       content: "Command cancelled, nothing was submitted.",
