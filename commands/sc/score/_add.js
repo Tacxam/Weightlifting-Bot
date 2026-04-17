@@ -90,18 +90,18 @@ module.exports = {
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
     .setDescription("Add a PR. If PR already exists, overwrites old PR.")
-    .addNumberOption((option) =>
-      option
-        .setName("weight")
-        .setDescription("The weight being submitted.")
-        .setRequired(true),
-    )
     .addStringOption((option) =>
       option
         .setName("exercise")
         .setDescription("The exercise being submitted.")
         .setRequired(true)
         .addChoices(...exerciseChoices),
+    )
+    .addNumberOption((option) =>
+      option
+        .setName("weight")
+        .setDescription("The weight being submitted.")
+        .setRequired(true),
     ),
 
   async execute(interaction) {

@@ -57,7 +57,7 @@ node index.js
 
 **user**
 [X] Configure to handle hashing
-[X] Fix handling for new powerlifting leaderboard style (NOTE: Filtered it, didn't change handling)
+[X] Fix handling for new powerlifting leaderboard style (NOTE: Filtered scores to only show exerciseChoices.js options, didn't change handling)
 
 ## Utility
 [X] Configure scoreLeaderboardInitialiser
