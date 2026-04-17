@@ -89,6 +89,11 @@ module.exports = {
   data: new SlashCommandSubcommandBuilder()
     .setName("add")
     .setDescription("Add a PR. If PR already exists, overwrites old PR.")
+    .addUserOption((option) => 
+      option
+        .setName("user")
+        .setDescription("The user whose lift is being added")
+        .setRequired(true))
     .addNumberOption((option) =>
       option
         .setName("weight")
@@ -125,6 +130,8 @@ module.exports = {
     }
 
     // Store values from options
+    const user = interaction.options.getUser("user")
+
     const weight = interaction.options.getNumber("weight");
 
     if (weight <= 0) {
@@ -147,7 +154,7 @@ module.exports = {
     }
 
     // Add entry to the pending object
-    setPending(interaction.user.id, { weight, exercise });
+    setPending(interaction.user.id, { user, weight, exercise });
 
     // Create button components
     const row = new ActionRowBuilder().addComponents(
