@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
-const { token } = require("./config.json");
+const { token, redis } = require("./config.json");
 const { createClient } = require("redis");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -13,7 +13,7 @@ client.cooldowns = new Collection();
 (async () => {
   // Create client
   const redisClient = createClient({
-    url: "redis://localhost:9379",
+    url: redis,
   });
 
   // Prepare error listener
