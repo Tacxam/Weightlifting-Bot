@@ -13,7 +13,7 @@ client.cooldowns = new Collection();
 (async () => {
   // Create client
   const redisClient = createClient({
-    url: "redis://localhost:8081",
+    url: "redis://localhost:10081",
   });
 
   // Prepare error listener
