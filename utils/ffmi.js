@@ -13,15 +13,15 @@ function getFFMI(height, bodyweight, bodyFat) {
 
 	fatFreeMass = bodyweight * (1 - bodyFatPercent);
 
-	ffmiBasic = fatFreeMass/(heightMeters * heightMeters);
+	ffmiBasic = fatFreeMass / (heightMeters * heightMeters);
 
-	ffmi = ffmiBasic + 6.1 * (1.8 - heightMeters);
+	ffmi = ffmiBasic + (6.1 * (1.8 - heightMeters));
 
-  const category = bmiCategories.find((c) => bmi <= c.limit);
+  const category = ffmiCategories.find((c) => ffmi <= c.limit);
 
 	roundedFFMI = ffmi.toFixed(1);
 
-  let content = `FFMI for Height: **${height}cm**, Bodyweight: **${bodyweight}kg** and BF%: **${bodyFatPercent}** is **${roundedBMI}**. This is considered **`;
+  let content = `FFMI for Height: **${height}cm**, Bodyweight: **${bodyweight}kg** and BF%: **${bodyFatPercent * 100}** is **${roundedFFMI}**. This is considered **`;
 
 	content += category ? category.name + "**" : "Very Suspicious**";
 

@@ -67,3 +67,4 @@ node index.js
 [ ] Create HR zones estimator
 [X] BMI calculator
 [X] Console log for relevant commands
+[ ] FFMI calculator (needs female/male estimations)
